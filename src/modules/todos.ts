@@ -45,11 +45,11 @@ function todos(state: TodosState = initialState, action: TodosAction): TodosStat
     switch (action.type){
         case ADD_TODO:
             const nextId = Math.max(...state.map(todo => todo.id)) + 1;
-            return state.concat({
+            return state.concat([{
                 id: nextId,
-                test: action.payload,
+                text: action.payload,
                 done: false
-            });
+            }]);
         case TOGGLE_TODO:
             return state.map(todo =>
                 todo.id === action.payload ? {...todo, done: !todo.done } : todo
