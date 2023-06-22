@@ -23,7 +23,7 @@ export const removeTodo = (id: number) => ({
 type TodosAction =
     | ReturnType<typeof addTodo>
     | ReturnType<typeof toggleTodo>
-    | ReturnType<typeof removeTodo>;
+    | ReturnType<typeof removeTodo>
 
 // 상태를 위한 타입 선언
 export type Todo = {
