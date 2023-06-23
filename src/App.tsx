@@ -1,13 +1,16 @@
 import React from 'react';
-import TodoInsert from "./components/TodoInsert";
-import TodoList from "./components/TodoList";
+import TodoInsert from "./pages/TodoInsert";
+import TodoList from "./pages/TodoList";
+import LayoutWrapper from "./layout/LayoutWrapper";
+import Header from "./layout/header";
 
 function App() {
   return (
-    <>
+    <LayoutWrapper>
+        <Header></Header>
       <TodoInsert/>
       <TodoList/>
-    </>
+    </LayoutWrapper>
   );
 }
 
