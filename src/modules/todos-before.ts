@@ -3,9 +3,9 @@ import { deprecated, ActionType, createReducer } from 'typesafe-actions';
 const { createStandardAction } = deprecated;
 
 // 액션 type
-const ADD_TODO = 'todos/ADD_TODO';
-const TOGGLE_TODO = 'todos/TOGGLE_TODO';
-const REMOVE_TODO = 'todos/REMOVE_TODO';
+const ADD_TODO = 'todosBefore/ADD_TODO';
+const TOGGLE_TODO = 'todosBefore/TOGGLE_TODO';
+const REMOVE_TODO = 'todosBefore/REMOVE_TODO';
 
 // 액션 생성 함수
 // createAction 사용시 문법
@@ -52,7 +52,7 @@ const initialState: TodosState = [
 ];
 
 // createReducer 로 리듀서 구현하기
-const todos = createReducer<TodosState, TodosAction>(initialState, {
+const todosBefore = createReducer<TodosState, TodosAction>(initialState, {
     [ADD_TODO]: (state, {payload: text}) =>
         state.concat([{
             id: Math.max(...state.map(todo => todo.id)) + 1,
@@ -66,7 +66,7 @@ const todos = createReducer<TodosState, TodosAction>(initialState, {
 })
 
 // 리듀서 구현 (기본 문법)
-// function todos(state: TodosState = initialState, action: TodosAction): TodosState {
+// function todosBefore(state: TodosState = initialState, action: TodosAction): TodosState {
 //     switch (action.type){
 //         case ADD_TODO:
 //             const nextId = Math.max(...state.map(todo => todo.id)) + 1;
@@ -86,4 +86,4 @@ const todos = createReducer<TodosState, TodosAction>(initialState, {
 //     }
 // }
 
-export default todos
+export default todosBefore
