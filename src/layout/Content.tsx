@@ -8,8 +8,6 @@ const StyledWrapper = styled.div`
     max-height: 550px;
     background-color: #fff;
     color: #000;
-    overflow-x: hidden;
-    overflow-y: scroll;
 `
 
 const StyledInner = styled.div`

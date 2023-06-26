@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
-    padding: 100px 0;
     width: 100%;
-    height: calc(100vh - 200px);
+    height: 100vh;
     background-color: #eee;
     color: #fff;
 `

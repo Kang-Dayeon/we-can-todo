@@ -5,9 +5,6 @@ const StyledWrapper = styled.div`
     padding: 20px 0 0;
     width: 100%;
     height: auto;
-    max-height: 200px;
-    overflow-x: hidden;
-    overflow-y: scroll;
 `
 
 const StyledTitle = styled.h2`
@@ -15,12 +12,25 @@ const StyledTitle = styled.h2`
     font-weight: bold;
 `
 
+const StyledListBox = styled.div`
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+`
+
 function ListBox (props:any) {
     const {children, title} = props
     return (
         <StyledWrapper>
-            <StyledTitle>{title}</StyledTitle>
-            {children}
+            <StyledTitle>
+                {title}
+            </StyledTitle>
+            <StyledListBox>
+                {children}
+            </StyledListBox>
         </StyledWrapper>
     )
 }
