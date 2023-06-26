@@ -8,6 +8,7 @@ export type TodosAction = ActionType<typeof actions>;
 export type Todo = {
     id: number;
     text: string;
-    done: boolean;
+    completed: boolean;
 };
+
 export type TodosState = Todo[];

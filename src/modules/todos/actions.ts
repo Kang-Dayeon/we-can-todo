@@ -3,9 +3,9 @@ import { deprecated } from 'typesafe-actions';
 const { createStandardAction } = deprecated;
 
 // 액션 type
-export const ADD_TODO = 'todosBefore/ADD_TODO';
-export const TOGGLE_TODO = 'todosBefore/TOGGLE_TODO';
-export const REMOVE_TODO = 'todosBefore/REMOVE_TODO';
+export const ADD_TODO = 'todos/ADD_TODO';
+export const TOGGLE_TODO = 'todos/TOGGLE_TODO';
+export const REMOVE_TODO = 'todos/REMOVE_TODO';
 
 // 액션 생성 함수
 // createAction 사용시 문법
