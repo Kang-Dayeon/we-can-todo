@@ -1,5 +1,4 @@
 import React from "react";
-import './TodoItem.scss'
 import { Todo } from '../modules/todos';
 import useTodoAction from "../hooks/useTodoAction";
 import styled from "styled-components";
