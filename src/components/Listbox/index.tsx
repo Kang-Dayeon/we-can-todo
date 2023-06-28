@@ -8,15 +8,14 @@ const StyledWrapper = styled.div`
 `
 
 const StyledTitle = styled.h2`
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
 `
 
 const StyledListBox = styled.div`
-    margin-top: 10px;
     width: 100%;
     height: auto;
-    max-height: 200px;
+    max-height: 300px;
     overflow-x: hidden;
     overflow-y: scroll;
 `

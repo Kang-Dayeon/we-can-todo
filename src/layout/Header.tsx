@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
+const headerBg = require('../assets/images/header.jpg');
+
 const StyledHeader = styled.div`
+    z-index: 100;
     padding: 20px 30px;
     width: auto;
     height: 150px;
-    background: url('./images/header.jpg') no-repeat center bottom;
+    background: url(${headerBg}) no-repeat center bottom;
     background-size: cover;
 `
 const StyledTitle = styled.h1`
