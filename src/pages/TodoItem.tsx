@@ -17,7 +17,7 @@ const TodoList = styled.li<{ completed: boolean }>`
     padding: 12px 10px;
     border: ${(props) => props.completed ? 'none' : '1px solid rgba(0,0,0,0.2)'};
     border-radius: 15px;
-    box-shadow: ${(props) => props.completed ? 'none' : '2px 2px 4px 0 rgba(0,0,0,0.1)'};
+    box-shadow: ${(props) => props.completed ? 'none' : '1px 1px 3px 0 rgba(0,0,0,0.1)'};
 `
 const ItemWrap = styled.div`
     display: flex;

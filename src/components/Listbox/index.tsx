@@ -18,6 +18,9 @@ const StyledListBox = styled.div`
     max-height: 300px;
     overflow-x: hidden;
     overflow-y: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
 `
 
 function ListBox (props:any) {

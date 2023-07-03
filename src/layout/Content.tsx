@@ -9,6 +9,9 @@ const StyledWrapper = styled.div`
     color: #000;
     overflow-x: hidden;
     overflow-y: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
 `
 
 const StyledInner = styled.div`
