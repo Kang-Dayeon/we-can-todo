@@ -1,8 +1,6 @@
 import React from "react";
-import {RootState} from "../store/store";
 import useTodoAction from "../hooks/useTodoAction";
 import styled from "styled-components";
-import {useSelector} from "react-redux";
 
 const IconCheck = require('../assets/images/icon/icon_check.png');
 
@@ -52,19 +50,18 @@ const RemoveBtn = styled.button`
 `
 
 
-function TodoItem(){
-    const todo = useSelector((state: RootState) => state.todos)
-    const { onToggle, onRemove } = useTodoAction(todo.id);
+function TodoItem(todoItem:any){
+    const { onToggle, onRemove } = useTodoAction(todoItem.id);
 
     return (
-        <TodoList completed={todo.completed}>
+        <TodoList completed={todoItem.completed}>
             <ItemWrap>
                 <div>
                     <CheckBox id="check"></CheckBox>
-                    <CheckLabel htmlFor="check" onClick={onToggle} completed={todo.completed}></CheckLabel>
+                    <CheckLabel htmlFor="check" onClick={onToggle} completed={todoItem.completed}></CheckLabel>
                 </div>
-                <TodoText completed={todo.completed}>
-                    {todo.text}
+                <TodoText completed={todoItem.completed}>
+                    {todoItem.text}
                 </TodoText>
             </ItemWrap>
             <RemoveBtn onClick={onRemove}>
