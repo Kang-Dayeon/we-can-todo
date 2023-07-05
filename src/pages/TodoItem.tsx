@@ -1,11 +1,8 @@
 import React from "react";
-import { Todo } from '../modules/todos';
+import {RootState} from "../store/store";
 import useTodoAction from "../hooks/useTodoAction";
 import styled from "styled-components";
-
-type TodoItemProps = {
-    todo: Todo;
-};
+import {useSelector} from "react-redux";
 
 const IconCheck = require('../assets/images/icon/icon_check.png');
 
@@ -55,7 +52,8 @@ const RemoveBtn = styled.button`
 `
 
 
-function TodoItem({ todo }: TodoItemProps){
+function TodoItem(){
+    const todo = useSelector((state: RootState) => state.todos)
     const { onToggle, onRemove } = useTodoAction(todo.id);
 
     return (

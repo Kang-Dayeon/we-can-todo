@@ -1,4 +1,4 @@
-import {User} from "../modules/auth";
+import {User} from "../store/auth";
 
 export const users: User = {
     id: 1,
