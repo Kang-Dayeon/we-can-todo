@@ -1,13 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import type {PayloadAction} from "@reduxjs/toolkit";
+import {TodosType} from "./type";
 
-interface ITodo {
-    id: number,
-    text: string,
-    completed: boolean
-}
-
-type TodosType = ITodo[]
 // 초기값 설정
 const initialState: TodosType = [
     {id: 1, text: '타입스크립트 배우기', completed: true},
@@ -35,18 +29,5 @@ const TodosSlice = createSlice({
     }
 })
 
-// createReducer 로 리듀서 구현하기
-// const todos = createReducer<TodosState, TodosAction>(initialState, {
-//     [ADD_TODO]: (state, {payload: text}) =>
-//         state.concat([{
-//             id: Math.max(...state.map(todo => todo.id)) + 1,
-//             text,
-//             completed: false
-//         }]),
-//     [TOGGLE_TODO]: (state, {payload: id}) =>
-//         state.map(todo => (todo.id === id ? {...todo, completed: !todo.completed} : todo)),
-//     [REMOVE_TODO]: (state, {payload: id}) =>
-//         state.filter(todo => todo.id !== id),
-// });
 export const {addTodo,toggleTodo,removeTodo} = TodosSlice.actions
 export default TodosSlice.reducer;

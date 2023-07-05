@@ -1,5 +1,6 @@
 import React from "react";
 import useTodoAction from "../hooks/useTodoAction";
+import {ITodo} from "../store/todos/type";
 import styled from "styled-components";
 
 const IconCheck = require('../assets/images/icon/icon_check.png');
@@ -50,7 +51,7 @@ const RemoveBtn = styled.button`
 `
 
 
-function TodoItem(todoItem:any){
+function TodoItem(todoItem:ITodo){
     const { onToggle, onRemove } = useTodoAction(todoItem.id);
 
     return (
