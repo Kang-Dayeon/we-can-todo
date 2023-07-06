@@ -1,19 +1,17 @@
 import React from 'react';
-import TodoInsert from "./pages/TodoInsert";
-import TodoList from "./pages/TodoList";
-import LayoutWrapper from "./layout/LayoutWrapper";
-import Header from "./layout/Header";
-import Content from "./layout/Content";
+// ** redux **
+import {Provider} from "react-redux";
+import {store} from "./store/store";
+import {BrowserRouter} from "react-router-dom";
+import Routers from "./Router";
 
 function App() {
   return (
-    <LayoutWrapper>
-        <Header></Header>
-        <Content>
-            <TodoInsert/>
-            <TodoList/>
-        </Content>
-    </LayoutWrapper>
+      <BrowserRouter>
+        <Provider store={store}>
+          <Routers/>
+        </Provider>
+      </BrowserRouter>
   );
 }
 

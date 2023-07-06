@@ -1,6 +1,6 @@
 // ** 새 항목을 등록 할 수 있는 컴포넌트 **
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import useAddTodo from "../hooks/useAddTodo";
+import useAddTodo from "../../hooks/useAddTodo";
 import styled from "styled-components";
 
 const InputWrap = styled.div`

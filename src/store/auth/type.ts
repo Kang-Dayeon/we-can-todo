@@ -2,7 +2,7 @@ export interface IUser {
     id: number,
     name: string,
     loginId: string,
-    password: number,
+    password: string,
 }
 
 export type userListType = IUser[]
