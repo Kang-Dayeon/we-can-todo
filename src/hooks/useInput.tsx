@@ -1,13 +1,9 @@
-import {useState} from "react";
+import React, {useState} from "react";
 
-interface Created {
-    initialValue: any;
-}
-
-export default ({initialValue}: Created) => {
+function useInput<T>(initialValue: T) {
     const [data, setDate] = useState(initialValue)
 
-    const handle = (e: any): void => {
+    const handle = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value, name} = e.target;
         setDate({
             ...data,
@@ -17,3 +13,5 @@ export default ({initialValue}: Created) => {
 
     return [data, handle]
 }
+
+export default useInput

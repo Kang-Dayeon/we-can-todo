@@ -3,7 +3,7 @@ import useTodoAction from "../../hooks/useTodoAction";
 import {ITodo} from "../../store/todos/type";
 import styled from "styled-components";
 
-const IconCheck = require('../assets/images/icon/icon_check.png');
+const IconCheck = require('../../assets/images/icon/icon_check.png');
 
 const TodoList = styled.li<{ completed: boolean }>`
     display: flex;

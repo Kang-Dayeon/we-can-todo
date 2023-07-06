@@ -1,11 +1,22 @@
-import React from "react";
-import {Routes,Route} from "react-router-dom";
+import React, {useEffect} from "react";
+import {Routes,Route,useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 import Main from "../pages/main/Main";
+import Login from "../pages/Login/Login";
+import {RootState} from "../store/store";
 
 const Routers = () => {
+    const navigate = useNavigate()
+    const isLogin = useSelector((state: RootState) => state.auth.isLogin)
+
+    useEffect(() => {
+        isLogin ? navigate('/') : navigate('/login')
+    }, [isLogin])
+
     return (
         <Routes>
             <Route path="/" element={<Main/>}></Route>
+            <Route path="/login" element={<Login/>}></Route>
         </Routes>
     )
 }

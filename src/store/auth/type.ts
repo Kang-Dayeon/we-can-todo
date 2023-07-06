@@ -9,6 +9,11 @@ export type userListType = IUser[]
 
 export interface AuthState {
     userList: userListType,
-    loginUser: IUser | null,
+    loginUser: IUser | undefined,
     isLogin: boolean
+}
+
+export interface ILogin {
+    loginId: string,
+    password: string
 }
