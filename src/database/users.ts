@@ -5,6 +5,6 @@ export const users:userListType  = [
         id: 1,
         name: 'Dayeon',
         loginId: 'dykang',
-        password: 123123,
+        password: '123123',
     },
 ]
