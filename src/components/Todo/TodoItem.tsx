@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const IconCheck = require('../../assets/images/icon/icon_check.png');
 
-const TodoList = styled.li<{ completed: boolean }>`
+const TodoList = styled.li<{ completed?: boolean }>`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -24,7 +24,7 @@ const CheckBox = styled.input`
     type: checkbox;
     display: none;
 `
-const CheckLabel = styled.label<{ completed: boolean }>`
+const CheckLabel = styled.label<{ completed?: boolean }>`
     display: inline-block;
     cursor: pointer;
     width: 20px;
@@ -36,7 +36,7 @@ const CheckLabel = styled.label<{ completed: boolean }>`
     background-size: 70%;
     transform: translateY(10%);
 `
-const TodoText = styled.p<{ completed: boolean }>`
+const TodoText = styled.p<{ completed?: boolean }>`
     font-size: 12px;
     padding: 0 10px;
     word-break: break-all;
@@ -44,6 +44,7 @@ const TodoText = styled.p<{ completed: boolean }>`
     text-decoration: ${(props) => props.completed ? 'line-through' : 'none'} ;
 `
 const RemoveBtn = styled.button`
+    padding: 0 10px;
     width: 10px;
     border: none;
     color: #999;
@@ -53,6 +54,7 @@ const RemoveBtn = styled.button`
 
 function TodoItem(todoItem:ITodo){
     const { onToggle, onRemove } = useTodoAction(todoItem.id);
+    console.log(typeof todoItem.completed)
 
     return (
         <TodoList completed={todoItem.completed}>
