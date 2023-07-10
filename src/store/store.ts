@@ -1,13 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
-import todoReducer from './todos/todoSlice';
-import authReducer from './auth/authSlice';
+import {persistedReducer} from "./rootReducer";
+import {persistStore} from "redux-persist";
 
-export const store = configureStore({
-    reducer: {
-        todos: todoReducer,
-        auth: authReducer
-    },
+export const store: any = configureStore({
+    reducer: persistedReducer
 })
 
-export type RootState =  ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export const persistor = persistStore(store)
+
+// export type RootState =  ReturnType<typeof rootReducer>

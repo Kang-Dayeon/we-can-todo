@@ -54,7 +54,6 @@ const RemoveBtn = styled.button`
 
 function TodoItem(todoItem:ITodo){
     const { onToggle, onRemove } = useTodoAction(todoItem.id);
-    console.log(typeof todoItem.completed)
 
     return (
         <TodoList completed={todoItem.completed}>
