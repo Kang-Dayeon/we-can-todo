@@ -9,7 +9,7 @@ export type userListType = IUser[]
 
 export interface AuthState {
     userList: userListType,
-    loginUser: IUser | undefined,
+    loginUser?: IUser,
     isLogin: boolean
 }
 

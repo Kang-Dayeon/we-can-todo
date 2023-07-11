@@ -13,17 +13,17 @@ const TodosSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        addTodo(state, action: PayloadAction<string>){
+        addTodo: (state, action: PayloadAction<string>) => {
             state.concat([{
                 id: Math.max(...state.map(todo => todo.id)) + 1,
                 text: action.payload,
                 completed: false
             }])
         },
-        toggleTodo(state, action: PayloadAction<number>){
+        toggleTodo: (state, action: PayloadAction<number>) => {
             state.map(todo => (todo.id === action.payload ? {...todo, completed: !todo.completed} : todo))
         },
-        removeTodo(state, action: PayloadAction<number>){
+        removeTodo: (state, action: PayloadAction<number>) => {
             state.filter(todo => todo.id !== action.payload)
         }
     }

@@ -3,9 +3,8 @@ import type {PayloadAction} from "@reduxjs/toolkit";
 import {AuthState, ILogin} from "./type";
 import {users} from "../../database/users";
 
-const initialState:AuthState = {
+const initialState: AuthState = {
     userList: users,
-    loginUser: undefined,
     isLogin: false
 }
 
@@ -13,7 +12,7 @@ const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login(state, action: PayloadAction<ILogin>){
+        login: (state, action: PayloadAction<ILogin>) => {
             if(!state.userList.some(user => user.loginId === action.payload.loginId)){
                 alert("아이디가 일치하지 않습니다")
             } else if(!state.userList.some(user => user.password === action.payload.password)){
