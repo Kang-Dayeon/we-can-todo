@@ -64,7 +64,7 @@ function TodoItem(todoItem:ITodo){
 
     const removeHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        onRemove()
+        if(window.confirm('정말 삭제하시겠습니까?')) onRemove()
     }
 
     return (
