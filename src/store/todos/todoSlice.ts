@@ -5,8 +5,6 @@ import {TodosType} from "./type";
 // 초기값 설정
 const initialState: TodosType = [
     {id: 1, text: '타입스크립트 배우기', completed: true},
-    {id: 2, text: '타입스크립트와 리덕스 함께 사용해보기', completed: true},
-    {id: 3, text: '투두리스트 만들기', completed: false},
 ];
 
 const TodosSlice = createSlice({
@@ -14,19 +12,17 @@ const TodosSlice = createSlice({
     initialState,
     reducers: {
         addTodo: (state, action: PayloadAction<string>) => {
-            console.log(state.map(item => item))
-            state.concat([{
+            state.push({
                 id: Math.max(...state.map(todo => todo.id)) + 1,
                 text: action.payload,
                 completed: false
-            }])
+            })
         },
         toggleTodo: (state, action: PayloadAction<number>) => {
-            console.log(action.payload)
-            state.map(todo => (todo.id === action.payload ? {...todo, completed: !todo.completed} : todo))
+            return state.map(todo => (todo.id === action.payload ? {...todo, completed: !todo.completed} : todo))
         },
         removeTodo: (state, action: PayloadAction<number>) => {
-            state.filter(todo => todo.id !== action.payload)
+            return state.filter(todo => todo.id !== action.payload)
         }
     }
 })
