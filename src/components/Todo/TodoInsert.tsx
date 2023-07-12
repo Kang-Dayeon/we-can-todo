@@ -28,20 +28,21 @@ const AddBtn = styled.button`
     background: #3d79b1;
     font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
 `
 
 function TodoInsert() {
-    const [value, setValue] = useState('');
-    const addTodo = useAddTodo();
+    const [value, setValue] = useState('')
+    const addTodo = useAddTodo()
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
+        setValue(e.target.value)
     };
 
     const onSubmit = (e: FormEvent) => {
-        e.preventDefault();
+        e.preventDefault()
         addTodo(value)
-        setValue('');
+        setValue('')
     };
 
     return (

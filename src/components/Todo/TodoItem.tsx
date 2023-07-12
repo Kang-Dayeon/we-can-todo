@@ -6,15 +6,15 @@ import styled from "styled-components";
 const IconCheck = require('../../assets/images/icon/icon_check.png');
 
 // ** styled component **
-const TodoList = styled.li<{ completedTodo: boolean }>`
+const TodoList = styled.li<{completed: string }>`
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 10px 0;
     padding: 12px 10px;
-    border: ${(props) => props.completedTodo ? 'none' : '1px solid rgba(0,0,0,0.2)'};
+    border: ${(props) => (props.completed === "true") ? 'none' : '1px solid rgba(0,0,0,0.2)'};
     border-radius: 15px;
-    box-shadow: ${(props) => props.completedTodo ? 'none' : '1px 1px 3px 0 rgba(0,0,0,0.1)'};
+    box-shadow: ${(props) => (props.completed === "true") ? 'none' : '1px 1px 3px 0 rgba(0,0,0,0.1)'};
 `
 const ItemWrap = styled.div`
     display: flex;
@@ -25,24 +25,24 @@ const CheckBox = styled.input`
     type: checkbox;
     display: none;
 `
-const CheckLabel = styled.label<{ completedTodo: boolean }>`
+const CheckLabel = styled.label<{ completed: string }>`
     display: inline-block;
     cursor: pointer;
     width: 20px;
     height: 20px;
-    border: ${(props) => props.completedTodo ? '1px solid #45BF86' : '1px solid rgba(0,0,0,0.3)'};
+    border: ${(props) => (props.completed === "true") ? '1px solid #45BF86' : '1px solid rgba(0,0,0,0.3)'};
     border-radius: 50%;
-    background: ${(props) => props.completedTodo ? `url(${IconCheck}) no-repeat center` : 'none'};
-    background-color: ${(props) => props.completedTodo ? '#CEF2E1' : '#fff'};
+    background: ${(props) => (props.completed === "true") ? `url(${IconCheck}) no-repeat center` : 'none'};
+    background-color: ${(props) => (props.completed === "true") ? '#CEF2E1' : '#fff'};
     background-size: 70%;
     transform: translateY(10%);
 `
-const TodoText = styled.p<{ completedTodo: boolean }>`
+const TodoText = styled.p<{ completed: string }>`
     font-size: 12px;
     padding: 0 10px;
     word-break: break-all;
-    color: ${(props) => props.completedTodo ? '#999' : '#000'};
-    text-decoration: ${(props) => props.completedTodo ? 'line-through' : 'none'} ;
+    color: ${(props) => (props.completed === "true") ? '#999' : '#000'};
+    text-decoration: ${(props) => (props.completed === "true") ? 'line-through' : 'none'} ;
 `
 const RemoveBtn = styled.button`
     padding: 0 10px;
@@ -50,24 +50,39 @@ const RemoveBtn = styled.button`
     border: none;
     color: #999;
     background: transparent;
+    cursor: pointer;
 `
 
 function TodoItem(todoItem:ITodo){
     const { onToggle, onRemove } = useTodoAction(todoItem.id);
-    const completedTodo: boolean = todoItem.completed
+    const completedProps = todoItem.completed
+
+    const toggleHandler = (e: React.MouseEvent<HTMLLabelElement>) => {
+        e.preventDefault()
+        onToggle()
+    }
+
+    const removeHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        onRemove()
+    }
 
     return (
-        <TodoList completedTodo={completedTodo}>
+        <TodoList completed={completedProps.toString()}>
             <ItemWrap>
                 <div>
                     <CheckBox id="check"></CheckBox>
-                    <CheckLabel htmlFor="check" onClick={() => onToggle} completedTodo={completedTodo}></CheckLabel>
+                    <CheckLabel
+                        htmlFor="check"
+                        onClick={toggleHandler}
+                        completed={completedProps.toString()}>
+                    </CheckLabel>
                 </div>
-                <TodoText completedTodo={completedTodo}>
+                <TodoText completed={completedProps.toString()}>
                     {todoItem.text}
                 </TodoText>
             </ItemWrap>
-            <RemoveBtn onClick={() => onRemove}>
+            <RemoveBtn onClick={removeHandler}>
                 X
             </RemoveBtn>
         </TodoList>

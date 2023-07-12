@@ -16,14 +16,14 @@ function TodoList(){
             <ListBox title={'TODO'}>
                 <ul>
                     {todos.map((todo: ITodo) => (
-                        todo.completed ? '' : <TodoItem {...todo} />
+                        todo.completed ? '' : <TodoItem {...todo} key={todo.id} />
                     ))}
                 </ul>
             </ListBox>
             <ListBox title={'COMPLETED'}>
                 <ul>
                     {todos.map((todo: ITodo) => (
-                        todo.completed ? <TodoItem {...todo} /> : ''
+                        todo.completed ? <TodoItem {...todo} key={todo.id} /> : ''
                     ))}
                 </ul>
             </ListBox>
