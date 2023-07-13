@@ -13,7 +13,7 @@ const TodosSlice = createSlice({
     reducers: {
         addTodo: (state, action: PayloadAction<string>) => {
             state.push({
-                id: Math.max(...state.map(todo => todo.id)) + 1,
+                id: (state.length === 0) ? 1 : Math.max(...state.map(todo => todo.id)) + 1,
                 text: action.payload,
                 completed: false
             })
