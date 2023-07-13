@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import type {PayloadAction} from "@reduxjs/toolkit";
 import {AuthState, ILogin} from "./type";
 import {users} from "../../database/users";
+import {PURGE} from "redux-persist";
 
 const initialState: AuthState = {
     userList: users,
@@ -24,8 +25,14 @@ const AuthSlice = createSlice({
                 state.isLogin = true
             }
         },
+        logout: (state) => {
+            state.isLogin = false
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(PURGE, () => initialState);
     }
 })
 
-export const {login} = AuthSlice.actions
+export const {login,logout} = AuthSlice.actions
 export default AuthSlice.reducer;

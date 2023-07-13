@@ -27,7 +27,7 @@ function Login(){
         })
     }
 
-    const loginAction = (e: React.MouseEvent<HTMLElement>) => {
+    const loginHandler = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault()
         dispatch(
             login({
@@ -55,7 +55,7 @@ function Login(){
                     value={text.password}
                     onChange={onChangeInput}
                 />
-                <Button onClick={loginAction}>Login</Button>
+                <Button onClick={loginHandler}>Login</Button>
             </Content>
         </LayoutWrapper>
     )
