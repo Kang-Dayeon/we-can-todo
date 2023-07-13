@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+// ** Styled-Component **
 const StyledWrapper = styled.div`
     width: 100%;
     min-height: 100vh;
@@ -16,7 +17,9 @@ const StyledInner = styled.div`
 `
 
 function LayoutWrapper (props:any) {
+    // props
     const {children} = props
+
     return (
         <StyledWrapper>
             <StyledInner>

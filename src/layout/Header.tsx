@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import {logout} from "../store/auth/authSlice";
-import {useAppDispatch} from "../hooks/TypedUseSelector";
+// ** Redux **
 import {persistor} from "../store/store";
-
+import {logout} from "../store/auth/authSlice";
+// ** Hook **
+import {useAppDispatch} from "../hooks/TypedUseSelector";
+// ** Img **
 const headerBg = require('../assets/images/header.jpg');
 
+// ** Styled-Component **
 const StyledHeader = styled.div`
     z-index: 100;
     padding: 20px 30px;
@@ -22,8 +25,10 @@ const StyledTitle = styled.h1`
 `
 
 function Header () {
+    // hook
     const dispatch = useAppDispatch()
 
+    // handler function
     const logoutHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         dispatch(logout)

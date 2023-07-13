@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+// ** Styled-Component **
 const StyledWrapper = styled.div`
     padding: 30px;
     width: auto;
@@ -21,7 +22,9 @@ const StyledInner = styled.div`
 `
 
 function Content (props:any) {
+    // props
     const {children} = props
+
     return (
         <StyledWrapper>
             <StyledInner>

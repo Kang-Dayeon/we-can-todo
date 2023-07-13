@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {persistedReducer, rootReducer} from "./rootReducer";
-import {persistStore, PURGE} from "redux-persist";
+import {persistStore} from "redux-persist";
 
 export const store: any = configureStore({
     reducer: persistedReducer,

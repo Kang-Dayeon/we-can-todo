@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+// ** Styled-Component **
 const StyledWrapper = styled.div`
     padding: 20px 0 0;
     width: 100%;
@@ -24,7 +25,9 @@ const StyledListBox = styled.div`
 `
 
 function List (props:any) {
+    // props
     const {children, title} = props
+
     return (
         <StyledWrapper>
             <StyledTitle>

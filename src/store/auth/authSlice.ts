@@ -1,9 +1,14 @@
+// ** RTK **
 import {createSlice} from "@reduxjs/toolkit";
 import type {PayloadAction} from "@reduxjs/toolkit";
-import {AuthState, ILogin} from "./type";
-import {users} from "../../database/users";
+// ** Redux **
 import {PURGE} from "redux-persist";
+// ** Type **
+import {AuthState, ILogin} from "./type";
+// ** Data **
+import {users} from "../../database/users";
 
+// 기본값
 const initialState: AuthState = {
     userList: users,
     isLogin: false

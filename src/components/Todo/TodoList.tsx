@@ -1,16 +1,16 @@
 import React from "react";
-// import {useSelector} from "react-redux";
-// import {RootReducer} from "../../store/rootReducer";
+// ** Type **
+import {ITodo} from "../../store/todos/type";
+// ** Hook **
+import {useAppSelector} from "../../hooks/TypedUseSelector";
+// ** Component **
 import TodoItem from "./TodoItem";
 import List from "../List/List";
-import {ITodo} from "../../store/todos/type";
-import {useAppSelector} from "../../hooks/TypedUseSelector";
 import NoContent from "./NoContent";
 
 function TodoList(){
+    // state
     const todos = useAppSelector((state) => state.todos);
-
-    // if(todos.length === 0) return <p>등록된 항목이 없습니다.</p>
 
     return (
         <>

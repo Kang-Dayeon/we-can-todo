@@ -1,9 +1,9 @@
 import React from 'react';
+import Routers from "./Router";
 // ** redux **
 import {Provider} from "react-redux";
 import {store, persistor} from "./store/store";
 import {BrowserRouter} from "react-router-dom";
-import Routers from "./Router";
 import {PersistGate} from "redux-persist/integration/react";
 
 function App() {

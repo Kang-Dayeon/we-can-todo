@@ -1,11 +1,14 @@
 import React from "react";
+// ** Hook **
 import useTodoAction from "../../hooks/useTodoAction";
+// ** Type **
 import {ITodo} from "../../store/todos/type";
 import styled from "styled-components";
 
+// ** Img **
 const IconCheck = require('../../assets/images/icon/icon_check.png');
 
-// ** styled component **
+// ** Styled-Component **
 const TodoList = styled.li<{completed: string }>`
     display: flex;
     align-items: center;
@@ -54,9 +57,12 @@ const RemoveBtn = styled.button`
 `
 
 function TodoItem(todoItem:ITodo){
+    // reducer
     const { onToggle, onRemove } = useTodoAction(todoItem.id);
+    // props
     const completedProps = todoItem.completed
 
+    // handler function
     const toggleHandler = (e: React.MouseEvent<HTMLLabelElement>) => {
         e.preventDefault()
         onToggle()

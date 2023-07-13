@@ -1,8 +1,10 @@
 import React from "react";
 import {styled} from "styled-components";
 
+// ** props type **
 type onChange = (e: React.ChangeEvent<HTMLInputElement>) => void
 
+// ** props interface **
 interface props {
     type: string,
     name: string,
@@ -11,6 +13,7 @@ interface props {
     onChange: onChange
 }
 
+// ** Styled-Component **
 const Input = styled.input`
     display: block;
     margin: 10px 0;
