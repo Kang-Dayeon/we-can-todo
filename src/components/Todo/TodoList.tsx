@@ -2,7 +2,7 @@ import React from "react";
 // import {useSelector} from "react-redux";
 // import {RootReducer} from "../../store/rootReducer";
 import TodoItem from "./TodoItem";
-import ListBox from "../../components/Listbox";
+import List from "../List/List";
 import {ITodo} from "../../store/todos/type";
 import {useAppSelector} from "../../hooks/TypedUseSelector";
 import NoContent from "./NoContent";
@@ -14,7 +14,7 @@ function TodoList(){
 
     return (
         <>
-            <ListBox title={'TODO'}>
+            <List title={'TODO'}>
                 {todos.length === 0 ?
                     <NoContent/> :
                     <ul>
@@ -23,8 +23,8 @@ function TodoList(){
                         ))}
                     </ul>
                 }
-            </ListBox>
-            <ListBox title={'COMPLETED'}>
+            </List>
+            <List title={'COMPLETED'}>
                 {todos.length === 0 ?
                     <NoContent/> :
                     <ul>
@@ -33,7 +33,7 @@ function TodoList(){
                         ))}
                     </ul>
                 }
-            </ListBox>
+            </List>
         </>
     );
 }

@@ -1,10 +1,15 @@
 import React, {useState} from "react";
-import LayoutWrapper from "../../layout/LayoutWrapper";
-import Content from "../../layout/Content";
-// import useInput from "../../hooks/useInput";
+// ** redux **
 import {useDispatch} from "react-redux";
 import {login} from "../../store/auth/authSlice";
+// ** type **
 import {ILogin} from "../../store/auth/type";
+// ** component **
+import LayoutWrapper from "../../layout/LayoutWrapper";
+import Content from "../../layout/Content";
+import Header from "../../layout/Header";
+import InputText from "../../components/Input/InputText";
+import Button from "../../components/Button/Button";
 
 function Login(){
     const dispatch = useDispatch()
@@ -34,10 +39,23 @@ function Login(){
 
     return (
         <LayoutWrapper>
+            <Header></Header>
             <Content>
-                <input type="text" name="loginId" value={text.loginId} onChange={onChangeInput}/>
-                <input type="password" name="password" value={text.password} onChange={onChangeInput}/>
-                <button onClick={loginAction}>Login</button>
+                <InputText
+                    type="text"
+                    name="loginId"
+                    placeholder="ID"
+                    value={text.loginId}
+                    onChange={onChangeInput}
+                />
+                <InputText
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    value={text.password}
+                    onChange={onChangeInput}
+                />
+                <Button onClick={loginAction}>Login</Button>
             </Content>
         </LayoutWrapper>
     )

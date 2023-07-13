@@ -23,7 +23,7 @@ const StyledListBox = styled.div`
     }
 `
 
-function ListBox (props:any) {
+function List (props:any) {
     const {children, title} = props
     return (
         <StyledWrapper>
@@ -37,4 +37,4 @@ function ListBox (props:any) {
     )
 }
 
-export default ListBox;
+export default List;

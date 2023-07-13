@@ -3,7 +3,7 @@ import {styled} from "styled-components";
 
 const Message = styled.div`
     display: flex;
-    justify-content: center;
+    padding: 10px 5px;
     font-size: 12px;
     color: #999;
 `
