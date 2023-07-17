@@ -4,7 +4,7 @@ import type {PayloadAction} from "@reduxjs/toolkit";
 // ** Redux **
 import {PURGE} from "redux-persist";
 // ** Type **
-import {AuthState, ILogin} from "./type";
+import {AuthState, ILogin, ISignUp} from "./type";
 // ** Data **
 import {users} from "../../database/users";
 
@@ -32,6 +32,15 @@ const AuthSlice = createSlice({
         },
         logout: (state) => {
             state.isLogin = false
+        },
+        signup: (state, action: PayloadAction<ISignUp>) => {
+            state.userList.push({
+                id: (state.userList.length === 0) ? 1 : Math.max(...state.userList.map(user => user.id)) + 1,
+                name: action.payload.name,
+                loginId: action.payload.loginId,
+                password: action.payload.password,
+                todos: []
+            })
         }
     },
     extraReducers: (builder) => {
@@ -39,5 +48,5 @@ const AuthSlice = createSlice({
     }
 })
 
-export const {login,logout} = AuthSlice.actions
+export const {login,logout,signup} = AuthSlice.actions
 export default AuthSlice.reducer;
