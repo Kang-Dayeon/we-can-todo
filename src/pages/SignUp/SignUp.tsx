@@ -37,20 +37,24 @@ function SignUp(){
 
     const signUpHandler = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault()
-        userList.map(user => {
-            if(user.loginId === text.loginId){
-                return alert("이 아이디는 사용하실 수 없습니다.")
-            } else {
-                dispatch(
-                    signup({
-                        name: text.name,
-                        loginId: text.loginId,
-                        password: text.password
-                    })
-                )
-                return navigate('/')
-            }
-        })
+        if (text.name === ''){
+            alert("이름을 입력해주세요.")
+        } else if(text.loginId === ''){
+            alert("아이디를 입력해 주세요.")
+        } else if (text.password === ''){
+            alert("비밀번호를 입력해주세요.")
+        } else if(userList.some(user => user.loginId === text.loginId)){
+            alert("이미 사용중인 아이디 입니다.")
+        } else {
+            dispatch(
+                signup({
+                    name: text.name,
+                    loginId: text.loginId,
+                    password: text.password
+                })
+            )
+            navigate('/')
+        }
     }
 
     return (
