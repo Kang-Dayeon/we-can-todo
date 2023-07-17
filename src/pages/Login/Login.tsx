@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Link} from "react-router-dom";
 // ** Redux **
 import {useDispatch} from "react-redux";
 import {login} from "../../store/auth/authSlice";
@@ -10,6 +11,7 @@ import Content from "../../layout/Content";
 import Header from "../../layout/Header";
 import InputText from "../../components/Input/InputText";
 import Button from "../../components/Button/Button";
+import Anchor from "../../components/Anchor/Anchor";
 
 function Login(){
     const dispatch = useDispatch()
@@ -58,6 +60,7 @@ function Login(){
                     onChange={onChangeInput}
                 />
                 <Button onClick={loginHandler}>Login</Button>
+                <Anchor link="/sign-up">Sign Up</Anchor>
             </Content>
         </LayoutWrapper>
     )

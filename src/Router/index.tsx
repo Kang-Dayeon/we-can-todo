@@ -5,6 +5,7 @@ import Main from "../pages/main/Main";
 import Login from "../pages/Login/Login";
 // ** Hook **
 import {useAppSelector} from "../hooks/TypedUseSelector";
+import SignUp from "../pages/SignUp/SignUp";
 
 const Routers = () => {
     // router
@@ -22,6 +23,7 @@ const Routers = () => {
         <Routes>
             <Route path="/" element={<Main/>}></Route>
             <Route path="/login" element={<Login/>}></Route>
+            <Route path="/sign-up" element={<SignUp/>}></Route>
         </Routes>
     )
 }
