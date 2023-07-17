@@ -6,5 +6,13 @@ export const users:userListType  = [
         name: 'Dayeon',
         loginId: 'dykang',
         password: '123123',
+        todos: [],
     },
+    {
+        id: 2,
+        name: 'Dy',
+        loginId: 'kang',
+        password: '123123',
+        todos: [],
+    }
 ]

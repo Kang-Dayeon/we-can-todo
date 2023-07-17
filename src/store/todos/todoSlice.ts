@@ -3,9 +3,7 @@ import type {PayloadAction} from "@reduxjs/toolkit";
 import {TodosType} from "./type";
 
 // 초기값 설정
-const initialState: TodosType = [
-    {id: 1, text: '타입스크립트 배우기', completed: true},
-];
+const initialState: TodosType = []
 
 const TodosSlice = createSlice({
     name: 'todos',
