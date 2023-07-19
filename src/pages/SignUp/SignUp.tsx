@@ -20,6 +20,9 @@ function SignUp(){
 
     // state
     const userList = useAppSelector(state => state.auth.userList)
+    const [idNull, setIdValue] = useState<boolean>(false)
+    const [pwNull, setPwNull] = useState<boolean>(false)
+    const [nameNull, setNameValue] = useState<boolean>(false)
     const [text, setText] = useState<ISignUp>({
         name:'',
         loginId: '',
@@ -37,15 +40,10 @@ function SignUp(){
 
     const signUpHandler = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault()
-        if (text.name === ''){
-            alert("이름을 입력해주세요.")
-        } else if(text.loginId === ''){
-            alert("아이디를 입력해 주세요.")
-        } else if (text.password === ''){
-            alert("비밀번호를 입력해주세요.")
-        } else if(userList.some(user => user.loginId === text.loginId)){
-            alert("이미 사용중인 아이디 입니다.")
-        } else {
+        if(text.loginId !== '' && text.password !== '' && text.name){
+            setNameValue(false)
+            setIdValue(false)
+            setPwNull(false)
             dispatch(
                 signup({
                     name: text.name,
@@ -54,6 +52,11 @@ function SignUp(){
                 })
             )
             navigate('/')
+        } else {
+
+            (text.loginId === '') ? setIdValue(true) : setIdValue(false);
+            (text.password === '') ? setPwNull(true) : setPwNull(false);
+            (text.name === '') ? setNameValue(true) : setNameValue(false);
         }
     }
 
@@ -67,6 +70,8 @@ function SignUp(){
                     placeholder="Name"
                     value={text.name}
                     onChange={onChangeInput}
+                    children="이름을 적어주세요."
+                    nullValue={nameNull}
                 />
                 <InputText
                     type="text"
@@ -74,6 +79,8 @@ function SignUp(){
                     placeholder="ID"
                     value={text.loginId}
                     onChange={onChangeInput}
+                    children="아이디를 적어주세요."
+                    nullValue={idNull}
                 />
                 <InputText
                     type="password"
@@ -81,6 +88,8 @@ function SignUp(){
                     placeholder="password"
                     value={text.password}
                     onChange={onChangeInput}
+                    children="비밀번호를 적어주세요."
+                    nullValue={pwNull}
                 />
                 <Button onClick={signUpHandler}>Sign Up</Button>
             </Content>

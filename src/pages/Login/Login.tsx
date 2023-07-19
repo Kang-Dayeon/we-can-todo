@@ -21,6 +21,8 @@ function Login(){
         loginId: '',
         password: ''
     })
+    const [idNull, setIdValue] = useState<boolean>(false)
+    const [pwNull, setPwNull] = useState<boolean>(false)
 
     // handler function
     const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,12 +35,19 @@ function Login(){
 
     const loginHandler = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault()
-        dispatch(
-            login({
-                loginId: text.loginId,
-                password: text.password
-            })
-        )
+        if(text.loginId !== '' && text.password !== ''){
+            setIdValue(false)
+            setPwNull(false)
+            dispatch(
+                login({
+                    loginId: text.loginId,
+                    password: text.password
+                })
+            )
+        } else {
+            (text.loginId === '') ? setIdValue(true) : setIdValue(false);
+            (text.password === '') ? setPwNull(true) : setPwNull(false);
+        }
     }
 
     return (
@@ -51,6 +60,8 @@ function Login(){
                     placeholder="ID"
                     value={text.loginId}
                     onChange={onChangeInput}
+                    children="아이디를 적어주세요."
+                    nullValue={idNull}
                 />
                 <InputText
                     type="password"
@@ -58,6 +69,8 @@ function Login(){
                     placeholder="password"
                     value={text.password}
                     onChange={onChangeInput}
+                    children="비밀번호를 적어주세요."
+                    nullValue={pwNull}
                 />
                 <Button onClick={loginHandler}>Login</Button>
                 <Anchor link="/sign-up">Sign Up</Anchor>
