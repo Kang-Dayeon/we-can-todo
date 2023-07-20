@@ -5,6 +5,8 @@ import {persistor} from "../store/store";
 import {logout} from "../store/auth/authSlice";
 // ** Hook **
 import {useAppDispatch, useAppSelector} from "../hooks/TypedUseSelector";
+import Year from 'react-live-clock'
+import Month from 'react-live-clock'
 // ** Fort Awesome **
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -16,14 +18,24 @@ library.add(faArrowRightFromBracket)
 const HeaderWrap = styled.div`
     position: relative;
     z-index: 100;
+    padding: 50px 0 0;
     width: auto;
-    height: 100px;
+    height: 130px;
     background: transparent;
 `
-const Title = styled.h1`
+const TimeWrap = styled.div<{isLogin: string}>`
+    display: ${(props) => (props.isLogin === 'true')? 'block' : 'none'};
+`
+const Time = styled.span`
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: normal;
+`
+const Title = styled.h1<{isLogin: string}>`
     position: absolute;
-    top: 50px;
-    left: 0;
+    bottom: 15px;
     padding: 0 20px;
     width: 100%;
     word-break: break-all;
@@ -32,15 +44,15 @@ const Title = styled.h1`
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    color: #ded9e0;
+    color: #fff;
     font-size: 23px;
     font-weight: bold;
-    text-align: center;
+    text-align: ${(props) => (props.isLogin === 'true')? 'left' : 'center'};
 `
 const LogoutBtn = styled.button`
     position: absolute;
     top: 10px;
-    right: 15px;
+    right: 10px;
     padding: 10px;
     font-size: 18px;
     color: #fff;
@@ -49,7 +61,7 @@ const LogoutBtn = styled.button`
     border-radius: 50%;
     transition: all 0.3s;
     &:hover{
-        right: 10px;
+        right: 5px;
         background: #feca3c;
     }
 `
@@ -76,9 +88,26 @@ function Header () {
                     <FontAwesomeIcon icon={faArrowRightFromBracket as IconProp} />
                 </LogoutBtn> : <></>
             }
-            <Title>
+            <Title isLogin={isLogin.toString()}>
                 {isLogin ? `What's up, ${userName}!` : 'MY TODO APP'}
+                <TimeWrap isLogin={isLogin.toString()}>
+                    <Time>
+                        <Year
+                            format={"YYYY"}
+                            ticking={false}
+                            timezone={"KR/Pacific"}
+                        />
+                    </Time>
+                    <Time>
+                        <Month
+                            format={"MMM"}
+                            ticking={false}
+                            timezone={"KR/Pacific"}
+                        />
+                    </Time>
+                </TimeWrap>
             </Title>
+
         </HeaderWrap>
     )
 }
