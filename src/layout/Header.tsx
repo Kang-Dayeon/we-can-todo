@@ -5,8 +5,10 @@ import {persistor} from "../store/store";
 import {logout} from "../store/auth/authSlice";
 // ** Hook **
 import {useAppDispatch, useAppSelector} from "../hooks/TypedUseSelector";
+// ** Library **
 import Year from 'react-live-clock'
 import Month from 'react-live-clock'
+import Day from 'react-live-clock'
 // ** Fort Awesome **
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -92,18 +94,13 @@ function Header () {
                 {isLogin ? `What's up, ${userName}!` : 'MY TODO APP'}
                 <TimeWrap isLogin={isLogin.toString()}>
                     <Time>
-                        <Year
-                            format={"YYYY"}
-                            ticking={false}
-                            timezone={"KR/Pacific"}
-                        />
+                        <Year format={"YYYY"} ticking={false} timezone={"KR/Pacific"}/>
                     </Time>
                     <Time>
-                        <Month
-                            format={"MMM"}
-                            ticking={false}
-                            timezone={"KR/Pacific"}
-                        />
+                        <Month format={"MMM"} ticking={false} timezone={"KR/Pacific"}/>
+                    </Time>
+                    <Time>
+                        <Day format={"DD"} ticking={false} timezone={"KR/Pacific"}/>
                     </Time>
                 </TimeWrap>
             </Title>
