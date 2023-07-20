@@ -13,6 +13,7 @@ import Content from "../../layout/Content";
 import Header from "../../layout/Header";
 import InputText from "../../components/Input/InputText";
 import Button from "../../components/Button/Button";
+import Anchor from "../../components/Anchor/Anchor";
 
 function SignUp(){
     const dispatch = useDispatch()
@@ -92,6 +93,7 @@ function SignUp(){
                     nullValue={pwNull}
                 />
                 <Button onClick={signUpHandler}>Sign Up</Button>
+                <Anchor link="/login">Login</Anchor>
             </Content>
         </LayoutWrapper>
     )
