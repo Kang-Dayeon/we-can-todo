@@ -43,7 +43,7 @@ const TodoText = styled.p<{ completed: string }>`
     font-size: 14px;
     padding: 0 10px;
     word-break: break-all;
-    color: ${(props) => (props.completed === "true") ? '#999' : '#fff'};
+    color: #fff;
     text-decoration: ${(props) => (props.completed === "true") ? 'line-through' : 'none'} ;
 `
 const RemoveBtn = styled.button`

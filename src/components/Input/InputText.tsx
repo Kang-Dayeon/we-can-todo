@@ -20,10 +20,14 @@ const Input = styled.input<{nullValue:string}>`
     display: block;
     margin: 10px 0 0;
     padding: 10px 15px;
-    border: ${(props) => (props.nullValue === 'true') ? '1px solid #0db6b3' : 'none'};
+    border: ${(props) => (props.nullValue === 'true') ? '1px solid #fff' : 'none'};
     border-radius: 15px;
-    background: rgba(108, 38, 124, 0.5);
+    background: rgba(255, 255, 255, 0.2);
     color: #fff;
+    font-size: 14px;
+    &::placeholder{
+        color: #fff;
+    }
 `
 const Validation = styled.p<{nullValue:string}>`
     display: ${(props) => (props.nullValue === 'true') ? 'block' : 'none'};

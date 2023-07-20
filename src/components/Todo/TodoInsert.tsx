@@ -7,9 +7,9 @@ import styled from "styled-components";
 // ** Styled-Component **
 const InputWrap = styled.div`
     display: flex;
-    padding: 15px 20px;
+    padding: 10px 20px;
     width: auto;
-    background-color: #ebf1f5;
+    background-color: rgba(255,255,255,0.2);
     border: none;
     border-radius: 30px;
 `
@@ -20,6 +20,9 @@ const Input = styled.input`
     background: transparent;
     outline: none;
     font-size: 14px;
+    &::placeholder{
+        color: #fff;
+    }
 `
 const AddBtn = styled.button`
     width: 30px;
