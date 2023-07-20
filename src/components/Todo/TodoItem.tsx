@@ -15,9 +15,9 @@ const TodoList = styled.li<{completed: string }>`
     justify-content: space-between;
     margin: 10px 0;
     padding: 12px 10px;
-    border: ${(props) => (props.completed === "true") ? 'none' : '1px solid rgba(0,0,0,0.2)'};
     border-radius: 15px;
     box-shadow: ${(props) => (props.completed === "true") ? 'none' : '1px 1px 3px 0 rgba(0,0,0,0.1)'};
+    background: rgba(38,1,71,0.2);
 `
 const ItemWrap = styled.div`
     display: flex;
@@ -33,7 +33,6 @@ const CheckLabel = styled.label<{ completed: string }>`
     cursor: pointer;
     width: 20px;
     height: 20px;
-    border: ${(props) => (props.completed === "true") ? '1px solid #45BF86' : '1px solid rgba(0,0,0,0.3)'};
     border-radius: 50%;
     background: ${(props) => (props.completed === "true") ? `url(${IconCheck}) no-repeat center` : 'none'};
     background-color: ${(props) => (props.completed === "true") ? '#CEF2E1' : '#fff'};
@@ -41,17 +40,17 @@ const CheckLabel = styled.label<{ completed: string }>`
     transform: translateY(10%);
 `
 const TodoText = styled.p<{ completed: string }>`
-    font-size: 12px;
+    font-size: 14px;
     padding: 0 10px;
     word-break: break-all;
-    color: ${(props) => (props.completed === "true") ? '#999' : '#000'};
+    color: ${(props) => (props.completed === "true") ? '#999' : '#fff'};
     text-decoration: ${(props) => (props.completed === "true") ? 'line-through' : 'none'} ;
 `
 const RemoveBtn = styled.button`
     padding: 0 10px;
     width: 10px;
     border: none;
-    color: #999;
+    color: #fff;
     background: transparent;
     cursor: pointer;
 `

@@ -14,8 +14,8 @@ const LinkWrap = styled.div`
     text-align: center;
 `
 const StyledLink = styled(Link)`
-    font-size: 12px;
-    color: #3d79b1;
+    font-size: 14px;
+    color: #feca3c;
 `
 
 function Anchor(props: props){

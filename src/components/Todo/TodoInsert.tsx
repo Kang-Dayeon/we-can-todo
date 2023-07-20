@@ -27,7 +27,7 @@ const AddBtn = styled.button`
     color: #fff;
     border: none;
     border-radius: 50%;
-    background: #3d79b1;
+    background: #feca3c;
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;

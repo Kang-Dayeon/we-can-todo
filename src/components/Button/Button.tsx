@@ -14,10 +14,10 @@ interface props {
 const ButtonStyled = styled.button`
     margin-top: 15px;
     padding: 12px 0;
-    color: #fff;
+    color: #000;
     border: none;
     border-radius: 20px;
-    background: #3d79b1;
+    background: #feca3c;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;

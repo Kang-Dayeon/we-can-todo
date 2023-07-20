@@ -12,21 +12,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 library.add(faArrowRightFromBracket)
 
-// ** Img **
-const headerBg = require('../assets/images/header.jpg');
-
 // ** Styled-Component **
 const HeaderWrap = styled.div`
     position: relative;
     z-index: 100;
     width: auto;
-    height: 150px;
-    background: url(${headerBg}) no-repeat center bottom;
-    background-size: cover;
+    height: 100px;
+    background: transparent;
 `
 const Title = styled.h1`
     position: absolute;
-    top: 45px;
+    top: 50px;
     left: 0;
     padding: 0 20px;
     width: 100%;
@@ -36,9 +32,10 @@ const Title = styled.h1`
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    color: #fff;
-    font-size: 26px;
+    color: #ded9e0;
+    font-size: 23px;
     font-weight: bold;
+    text-align: center;
 `
 const LogoutBtn = styled.button`
     position: absolute;
@@ -53,12 +50,11 @@ const LogoutBtn = styled.button`
     transition: all 0.3s;
     &:hover{
         right: 10px;
-        background: #3d79b1;
+        background: #feca3c;
     }
 `
 
 function Header () {
-
     // state
     const isLogin = useAppSelector(state => state.auth.isLogin)
     const userName = useAppSelector(state => state.auth.loginUser !== undefined ? state.auth.loginUser.name : undefined)

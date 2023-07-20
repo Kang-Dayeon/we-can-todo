@@ -20,14 +20,16 @@ const Input = styled.input<{nullValue:string}>`
     display: block;
     margin: 10px 0 0;
     padding: 10px 15px;
-    border: ${(props) => (props.nullValue === 'true') ? '1px solid #FF0D00' : '1px solid rgba(0,0,0,0.2)'};
+    border: ${(props) => (props.nullValue === 'true') ? '1px solid #0db6b3' : 'none'};
     border-radius: 15px;
+    background: rgba(108, 38, 124, 0.5);
+    color: #fff;
 `
 const Validation = styled.p<{nullValue:string}>`
     display: ${(props) => (props.nullValue === 'true') ? 'block' : 'none'};
     padding: 5px 10px 0;
     font-size: 11px;
-    color: #FF0D00;
+    color: #fff;
 `
 
 function InputText(props: props){
