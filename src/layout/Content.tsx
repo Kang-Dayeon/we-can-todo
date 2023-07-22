@@ -5,7 +5,7 @@ import styled from "styled-components";
 const StyledWrapper = styled.div`
     padding: 30px 15px;
     width: 100%;
-    height: auto;
+    height: calc(100vh - 180px);
     background-color: rgba(38,1,71,0.5);
     color: #000;
     overflow-x: hidden;
