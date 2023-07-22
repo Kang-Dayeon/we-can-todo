@@ -1,11 +1,10 @@
-import React from "react";
 // ** Type **
-import {ITodo} from "../../store/todos/type";
+import {ITodo} from "../../../store/todos/type";
 // ** Hook **
-import {useAppSelector} from "../../hooks/TypedUseSelector";
+import {useAppSelector} from "../../../hooks/TypedUseSelector";
 // ** Component **
 import TodoItem from "./TodoItem";
-import List from "../List/List";
+import List from "../../../components/List/List";
 import NoContent from "./NoContent";
 
 function TodoList(){

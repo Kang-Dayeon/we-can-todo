@@ -1,12 +1,12 @@
 import React from "react";
 // ** Hook **
-import useTodoAction from "../../hooks/useTodoAction";
+import useTodoAction from "../../../hooks/useTodoAction";
 // ** Type **
-import {ITodo} from "../../store/todos/type";
+import {ITodo} from "../../../store/todos/type";
 import styled from "styled-components";
 
 // ** Img **
-const IconCheck = require('../../assets/images/icon/icon_check.png');
+const IconCheck = require('../../../assets/images/icon/icon_check.png');
 
 // ** Styled-Component **
 const TodoList = styled.li<{completed: string }>`
