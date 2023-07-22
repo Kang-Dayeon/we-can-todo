@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {login} from "../../store/auth/authSlice";
 // ** Type **
-import {ILogin} from "../../store/auth/type";
+import { IUser } from "../../store/auth/type";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Content from "../../layout/Content";
@@ -17,7 +17,7 @@ function Login(){
     const dispatch = useDispatch()
 
     // state
-    const [text, setText] = useState<ILogin>({
+    const [text, setText] = useState<IUser>({
         loginId: '',
         password: ''
     })

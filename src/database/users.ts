@@ -1,6 +1,6 @@
-import {userListType} from "../store/auth/type";
+import {IUser} from "../store/auth/type";
 
-export const users:userListType  = [
+export const users:IUser[]  = [
     {
         id: 1,
         name: 'Dayeon',

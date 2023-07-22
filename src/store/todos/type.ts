@@ -3,5 +3,3 @@ export interface ITodo {
     text: string,
     completed: boolean
 }
-
-export type TodosType = ITodo[]

@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 // ** Hook **
 import {useAppSelector} from "../../hooks/TypedUseSelector";
 // ** Component **
-import TodoInsert from "../../components/Todo/TodoInsert";
-import TodoList from "../../components/Todo/TodoList";
+import TodoInsert from "./Todo/TodoInsert";
+import TodoList from "./Todo/TodoList";
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Header from "../../layout/Header";
 import Content from "../../layout/Content";

@@ -3,10 +3,8 @@ import {useNavigate} from "react-router-dom";
 // ** Redux **
 import {useDispatch} from "react-redux";
 import {signup} from "../../store/auth/authSlice";
-// ** Hook **
-import {useAppSelector} from "../../hooks/TypedUseSelector";
 // ** Type **
-import {ISignUp} from "../../store/auth/type";
+import {IUser} from "../../store/auth/type";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Content from "../../layout/Content";
@@ -20,11 +18,10 @@ function SignUp(){
     const navigate = useNavigate()
 
     // state
-    const userList = useAppSelector(state => state.auth.userList)
     const [idNull, setIdValue] = useState<boolean>(false)
     const [pwNull, setPwNull] = useState<boolean>(false)
     const [nameNull, setNameValue] = useState<boolean>(false)
-    const [text, setText] = useState<ISignUp>({
+    const [text, setText] = useState<IUser>({
         name:'',
         loginId: '',
         password: ''

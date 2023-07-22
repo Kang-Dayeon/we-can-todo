@@ -1,9 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
 import type {PayloadAction} from "@reduxjs/toolkit";
-import {TodosType} from "./type";
+import {ITodo} from "./type";
 
 // 초기값 설정
-const initialState: TodosType = []
+const initialState: ITodo[] = []
 
 const TodosSlice = createSlice({
     name: 'todos',

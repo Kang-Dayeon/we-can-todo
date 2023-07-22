@@ -1,28 +1,15 @@
-import {TodosType} from "../todos/type";
+import {ITodo} from "../todos/type";
 
 export interface IUser {
-    id: number,
-    name: string,
+    id?: number,
+    name?: string,
     loginId: string,
     password: string,
-    todos: TodosType
+    todos?: ITodo[]
 }
-
-export type userListType = IUser[]
 
 export interface AuthState {
-    userList: userListType,
+    userList: IUser[],
     loginUser?: IUser,
     isLogin: boolean,
-}
-
-export interface ILogin {
-    loginId: string,
-    password: string
-}
-
-export interface ISignUp {
-    name: string,
-    loginId: string,
-    password: string
 }
