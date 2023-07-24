@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 // ** Redux **
 import {persistor} from "../store/store";
@@ -6,7 +6,8 @@ import {logout} from "../store/auth/authSlice";
 // ** Hook **
 import {useAppDispatch, useAppSelector} from "../hooks/TypedUseSelector";
 // ** Library **
-import Clock from 'react-live-clock'
+import Moment from "react-moment";
+import {useInterval} from "use-interval"
 // ** Fort Awesome **
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -70,6 +71,7 @@ function Header () {
     // state
     const isLogin = useAppSelector(state => state.auth.isLogin)
     const userName = useAppSelector(state => state.auth.loginUser !== undefined ? state.auth.loginUser.name : undefined)
+    const [nowTime, setNowTime] = useState(Date.now())
 
     // hook
     const dispatch = useAppDispatch()
@@ -80,6 +82,11 @@ function Header () {
         dispatch(logout)
         await persistor.purge();
     }
+
+    // useInterval hook
+    useInterval(() => {
+        setNowTime(Date.now())
+    },1000)
 
     return (
         <HeaderWrap>
@@ -92,7 +99,7 @@ function Header () {
                 {isLogin ? `What's up, ${userName}!` : 'MY TODO APP'}
                 <TimeWrap isLogin={isLogin.toString()}>
                     <Time>
-                        <Clock format={"YYYY MM DD HH:mm"} ticking={false} timezone={"KR/Pacific"}/>
+                        <Moment format="YY-MM-DD HH:mm">{nowTime}</Moment>
                     </Time>
                 </TimeWrap>
             </Title>
