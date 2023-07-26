@@ -1,35 +1,30 @@
 require('dotenv').config()
-// ** server **
+// ** library **
 const express = require('express')
+const multer = require('multer')
+const fs = require('fs')
+const bodyPerser = require('body-parser')
+const db = require('./config/mysql')
 const path = require('path')
 const cors = require('cors')
+
 const app = express()
-
-// ** Data **
-const mysql = require('mysql')
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_ID,
-  password: process.env.DB_PW,
-  database: 'weCanTodo'
-})
-
-connection.connect();
-
-connection.query('SELECT * form users', (error, rows, fields) => {
-  if(error) throw error;
-  console.log('user info is : ', rows)
-})
-
-connection.end();
+const conn = db.init()
 
 const server = require('http').createServer(app)
+
+// ** 미들웨어 **
+app.use(bodyPerser.json())
+app.use(bodyPerser.urlencoded({extended: false}))
 
 app.use(cors()) // cors 미들웨어
 
 app.get('/', (req, res) => {
-  res.send({message: 'hello'})
+  const sql = "select * from todoList"
+  conn.query(sql, function(err, result){
+    if(err) console.log("query is not excuted: " + err)
+    else res.send(result)
+  })
 })
 
 server.listen(8080, () => {
