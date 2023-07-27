@@ -9,14 +9,15 @@ import {PersistGate} from "redux-persist/integration/react";
 import axios from 'axios';
 
 function App() {
-    const sendRequest = async () => {
-        const response = await axios.get('http://localhost:8080')
-        console.log(response)
-        console.log(response.data)
-    }
+    // const sendRequest = async () => {
+    //     const response = await axios.get('http://localhost:8080')
+    //     console.log(response)
+    //     console.log(response.data)
+    // }
 
     useEffect(() => {
-        sendRequest()
+        axios.get('http://localhost:8080')
+            .then((res) => console.log(res.data))
     })
   return (
       <BrowserRouter>

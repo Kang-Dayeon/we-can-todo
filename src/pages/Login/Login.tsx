@@ -11,6 +11,7 @@ import Header from "../../layout/Header";
 import InputText from "../../components/Input/InputText";
 import Button from "../../components/Button/Button";
 import Anchor from "../../components/Anchor/Anchor";
+import axios from "axios";
 
 function Login(){
     const dispatch = useDispatch()
@@ -37,12 +38,15 @@ function Login(){
         if(text.loginId !== '' && text.password !== ''){
             setIdValue(false)
             setPwNull(false)
-            dispatch(
-                login({
-                    loginId: text.loginId,
-                    password: text.password
+            const body = {
+                loginId: text.loginId,
+                password: text.password
+            }
+            axios.post("http://localhost:8080/api/login", body)
+                .then((res) => {
+                    console.log(res.data)
                 })
-            )
+            dispatch(login(body))
         } else {
             (text.loginId === '') ? setIdValue(true) : setIdValue(false);
             (text.password === '') ? setPwNull(true) : setPwNull(false);
