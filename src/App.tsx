@@ -15,10 +15,10 @@ function App() {
     //     console.log(response.data)
     // }
 
-    useEffect(() => {
-        axios.get('http://localhost:8080')
-            .then((res) => console.log(res.data))
-    })
+    // useEffect(() => {
+    //     axios.get('http://localhost:8080')
+    //         .then((res) => console.log(res.data))
+    // })
   return (
       <BrowserRouter>
         <Provider store={store}>

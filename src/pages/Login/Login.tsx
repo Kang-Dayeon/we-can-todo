@@ -46,6 +46,7 @@ function Login(){
                 .then((res) => {
                     console.log(res.data)
                 })
+            console.log(window.sessionStorage.getItem('user'))
             dispatch(login(body))
         } else {
             (text.loginId === '') ? setIdValue(true) : setIdValue(false);
