@@ -5,20 +5,8 @@ import {Provider} from "react-redux";
 import {store, persistor} from "./store/store";
 import {BrowserRouter} from "react-router-dom";
 import {PersistGate} from "redux-persist/integration/react";
-// ** axios **
-import axios from 'axios';
 
 function App() {
-    // const sendRequest = async () => {
-    //     const response = await axios.get('http://localhost:8080')
-    //     console.log(response)
-    //     console.log(response.data)
-    // }
-
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080')
-    //         .then((res) => console.log(res.data))
-    // })
   return (
       <BrowserRouter>
         <Provider store={store}>
