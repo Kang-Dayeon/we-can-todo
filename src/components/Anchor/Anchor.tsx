@@ -4,8 +4,8 @@ import {Link} from "react-router-dom";
 
 // ** props interface **
 interface props {
-    link: string,
-    children: string
+    link: string;
+    children: string;
 }
 
 // ** Styled-Component **

@@ -1,19 +1,17 @@
-import React from "react";
+import React, {HTMLAttributes} from "react";
 import {styled} from "styled-components";
 
-// ** props type **
-type onClick = (e: React.MouseEvent<HTMLButtonElement>) => void
-
 // ** props interface **
-interface props {
-    children: string,
-    onClick: onClick
+interface props extends HTMLAttributes<HTMLButtonElement>{
+    children: string;
+    type?: 'submit' | 'reset' | 'button' | undefined;
 }
 
 // ** Styled-component **
 const ButtonStyled = styled.button`
     margin-top: 15px;
     padding: 12px 0;
+    width: 100%;
     color: #000;
     border: none;
     border-radius: 20px;
@@ -29,7 +27,7 @@ function Button(props: props){
 
     return (
         <ButtonStyled
-            onClick={props.onClick}
+            type={props.type}
         >
             {children}
         </ButtonStyled>

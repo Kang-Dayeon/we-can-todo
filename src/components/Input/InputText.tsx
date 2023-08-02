@@ -1,26 +1,21 @@
 import React from "react";
 import {styled} from "styled-components";
 
-// ** props type **
-type onChange = (e: React.ChangeEvent<HTMLInputElement>) => void
-
 // ** props interface **
-interface props {
-    type: string,
-    name: string,
-    placeholder: string,
-    value: string,
-    onChange: onChange,
-    children: string,
-    nullValue : boolean,
+interface props{
+    type: string;
+    name: string;
+    placeholder: string;
+    value: string;
 }
 
 // ** Styled-Component **
-const Input = styled.input<{nullValue:string}>`
+const Input = styled.input`
     display: block;
     margin: 10px 0 0;
     padding: 10px 15px;
-    border: ${(props) => (props.nullValue === 'true') ? '1px solid #fff' : 'none'};
+    width: 100%;
+    border: none;
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
@@ -28,12 +23,6 @@ const Input = styled.input<{nullValue:string}>`
     &::placeholder{
         color: #fff;
     }
-`
-const Validation = styled.p<{nullValue:string}>`
-    display: ${(props) => (props.nullValue === 'true') ? 'block' : 'none'};
-    padding: 5px 10px 0;
-    font-size: 11px;
-    color: #fff;
 `
 
 function InputText(props: props){
@@ -44,12 +33,7 @@ function InputText(props: props){
                 name={props.name}
                 placeholder={props.placeholder}
                 value={props.value}
-                onChange={props.onChange}
-                nullValue={props.nullValue.toString()}
             />
-            <Validation nullValue={props.nullValue.toString()}>
-                {props.children}
-            </Validation>
         </>
     )
 }
