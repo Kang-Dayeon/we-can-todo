@@ -1,7 +1,8 @@
 require('dotenv').config()
 // ** library **
 const express = require('express')
-const expressSession = require('express-session')
+const session = require('express-session')
+const MySQLStore = require('express-mysql-session')(session())
 const multer = require('multer')
 const fs = require('fs')
 const bodyParser = require('body-parser')
@@ -21,24 +22,26 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
 // ** session **
-app.use(
-  expressSession({
+const sessionStore = new MySQLStore(db.db_info)
+
+app.use(session({
     secret: "my key",
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore
   })
 )
 
 app.get('/', (req, res) => {
-  if(req.session){
+  if(req.session.isLogined){
     res.redirect('/')
-  } else {
-    res.redirect('/login')
     const sql = "select * from todoList"
     conn.query(sql, function(err, result){
       if(err) console.log("query is not excuted: " + err)
       else res.send(result)
     })
+  } else {
+    res.redirect('/login')
   }
 })
 
@@ -50,14 +53,13 @@ app.post('/api/login', (req, res) => {
   conn.query(sql,[userId,password], function(err, result){
     if(err) {
       throw console.log('query is not excuted: ' + err)
-    } else {
-      res.session = {
-        id: result[0].id,
-        userId: result[0].userId,
-        pw: result[0].password,
-        name: result[0].name,
-        authorized: true,
-      }
+    }
+    if(result[0] !== undefined){
+      req.session.userId = result[0].userId
+      req.session.isLogined =  true
+      req.session.save(function(){
+        res.redirect('/')
+      })
     }
   })
 })
