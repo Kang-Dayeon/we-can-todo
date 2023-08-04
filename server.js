@@ -22,7 +22,14 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
 // ** session **
-const sessionStore = new MySQLStore(db.db_info)
+const options = {
+  host: 'localhost',
+  port: 3306,
+  user: "",
+  password: "",
+  database: ""
+}
+const sessionStore = new MySQLStore(options)
 
 app.use(session({
     secret: "my key",
@@ -46,7 +53,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/login', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*")
+  // res.header("Access-Control-Allow-Origin", "*")
   let userId = req.body.loginId
   let password = req.body.password
   const sql = "SELECT * FROM users WHERE userId=? AND password=?"

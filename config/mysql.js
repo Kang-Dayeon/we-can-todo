@@ -2,7 +2,7 @@ require('dotenv').config()
 
 // ** Data **
 const mysql = require('mysql2')
-export const db_info = {
+const db_info = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_ID,
