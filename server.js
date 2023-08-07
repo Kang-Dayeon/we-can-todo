@@ -2,12 +2,12 @@ require('dotenv').config()
 // ** library **
 const express = require('express')
 const session = require('express-session')
-const MySQLStore = require('express-mysql-session')(session())
-const multer = require('multer')
-const fs = require('fs')
+const MySQLStore = require('express-mysql-session')(session)
+// const multer = require('multer')
+// const fs = require('fs')
 const bodyParser = require('body-parser')
 const db = require('./config/mysql')
-const path = require('path')
+// const path = require('path')
 const cors = require('cors')
 
 const app = express()
@@ -23,11 +23,11 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 // ** session **
 const options = {
-  host: 'localhost',
-  port: 3306,
-  user: "",
-  password: "",
-  database: ""
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_ID,
+  password: process.env.DB_PW,
+  database: 'todo'
 }
 const sessionStore = new MySQLStore(options)
 
