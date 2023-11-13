@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 // ** Redux **
-import {persistor} from "../store/store";
+import {persist} from "../store/store";
 import {logout} from "../store/auth/authSlice";
 // ** Hook **
 import {useAppDispatch, useAppSelector} from "../hooks/TypedUseSelector";
@@ -80,7 +80,7 @@ function Header () {
     const logoutHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         dispatch(logout)
-        await persistor.purge();
+        await persist.purge();
     }
 
     // useInterval hook

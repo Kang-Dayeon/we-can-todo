@@ -37,13 +37,11 @@ function SignUp(){
                 .required('Required'),
         }),
         onSubmit: values => {
-            dispatch(
-                signup({
-                    name: values.name,
-                    loginId: values.loginId,
-                    password: values.password
-                })
-            )
+            dispatch(signup({
+                name: values.name,
+                loginId: values.loginId,
+                password: values.password
+            }))
             navigate('/')
         }
     })
@@ -57,7 +55,8 @@ function SignUp(){
                         type="text"
                         name="name"
                         placeholder="Name"
-                        value={formik.values.name}
+                        value={formik.values.name || ''}
+                        onChange={formik.handleChange}
                         {...formik.getFieldProps('name')}
                     />
                     {formik.touched.name && formik.errors.name ? (
@@ -67,7 +66,8 @@ function SignUp(){
                         type="text"
                         name="loginId"
                         placeholder="ID"
-                        value={formik.values.loginId}
+                        value={formik.values.loginId || ''}
+                        onChange={formik.handleChange}
                         {...formik.getFieldProps('loginId')}
                     />
                     {formik.touched.loginId && formik.errors.loginId ? (
@@ -77,7 +77,8 @@ function SignUp(){
                         type="password"
                         name="password"
                         placeholder="password"
-                        value={formik.values.password}
+                        value={formik.values.password || ''}
+                        onChange={formik.handleChange}
                         {...formik.getFieldProps('password')}
                     />
                     {formik.touched.password && formik.errors.password ? (

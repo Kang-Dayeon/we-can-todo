@@ -8,7 +8,7 @@ export const store: any = configureStore({
     devTools: true,
 })
 
-export const persistor = persistStore(store)
+export const persist = persistStore(store)
 
 // state type 지정 코드
 export type RootState = ReturnType<typeof rootReducer>

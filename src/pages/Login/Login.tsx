@@ -12,7 +12,7 @@ import Button from "../../components/Button/Button";
 import Anchor from "../../components/Anchor/Anchor";
 import Validation from "../../components/Validation/Validation";
 // ** Library **
-import {useFormik, Field, Form} from "formik";
+import {useFormik} from "formik";
 import * as Yup from 'yup';
 
 function Login(){
@@ -32,7 +32,7 @@ function Login(){
                 .required('Required'),
         }),
         onSubmit: values => {
-            axios.post("http://localhost:8080/api/login", values)
+            axios.post("http://localhost:8080/api/login", values, {withCredentials: true})
                 .then((res) => {
                     console.log(res.data)
                 })
@@ -53,7 +53,8 @@ function Login(){
                         type="text"
                         name="loginId"
                         placeholder="ID"
-                        value={formik.values.loginId}
+                        value={formik.values.loginId || ''}
+                        onChange={formik.handleChange}
                         {...formik.getFieldProps('loginId')}
                     />
                     {formik.touched.loginId && formik.errors.loginId ? (
@@ -63,7 +64,8 @@ function Login(){
                         type="password"
                         name="password"
                         placeholder="password"
-                        value={formik.values.password}
+                        value={formik.values.password || ''}
+                        onChange={formik.handleChange}
                         {...formik.getFieldProps('password')}
                     />
                     {formik.touched.password && formik.errors.password ? (

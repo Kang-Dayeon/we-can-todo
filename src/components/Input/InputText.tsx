@@ -7,6 +7,7 @@ interface props{
     name: string;
     placeholder: string;
     value: string;
+    onChange: any;
 }
 
 // ** Styled-Component **
@@ -27,14 +28,13 @@ const Input = styled.input`
 
 function InputText(props: props){
     return (
-        <>
-            <Input
-                type={props.type}
-                name={props.name}
-                placeholder={props.placeholder}
-                value={props.value}
-            />
-        </>
+        <Input
+            type={props.type}
+            name={props.name}
+            placeholder={props.placeholder}
+            value={props.value}
+            onChange={props.onChange}
+        />
     )
 }
 
