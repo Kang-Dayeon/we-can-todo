@@ -32,11 +32,12 @@ function Login(){
                 .required('Required'),
         }),
         onSubmit: values => {
-            axios.post("http://localhost:8080/api/login", values, {withCredentials: true})
+            axios.post("/api/login", values, {withCredentials: true})
                 .then((res) => {
-                    console.log(res.data)
+                    console.log(window.sessionStorage.getItem("todoInfo"))
+                    // console.log(res.data)
                 })
-            console.log(window.sessionStorage.getItem('user'))
+
             dispatch(login({
                 loginId: values.loginId,
                 password: values.password

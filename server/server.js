@@ -1,76 +1,56 @@
-require('dotenv').config()
-// ** library **
 const express = require('express')
-const session = require('express-session')
-const MySQLStore = require('express-mysql-session')(session)
-// const multer = require('multer')
-// const fs = require('fs')
-const bodyParser = require('body-parser')
-const db = require('./config/mysql')
-// const path = require('path')
-const cors = require('cors')
-
 const app = express()
-app.use(cors({credentials: true, origin: "*"})) // cors 미들웨어
+const session = require('express-session')
+const path = require('path')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const db = require('./config/mysql')
 
+// db 연결
 const conn = db.init()
 
-const server = require('http').createServer(app)
-
-// ** 미들웨어 **
+// 미들웨어
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
-// ** session **
-const options = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_ID,
-  password: process.env.DB_PW,
-  database: 'todo'
-}
-const sessionStore = new MySQLStore(options)
+// cors 전체로 허용
+app.use(cors())
 
-app.use(session({
-    secret: "my key",
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore
-  })
-)
+// 서버 시작하면 동작함
+app.listen(8080, function(){
+  console.log('listening on 8080')
+})
 
-app.get('/', (req, res) => {
-  if(req.session.isLogined){
-    res.redirect('/')
-    const sql = "select * from todoList"
-    conn.query(sql, function(err, result){
-      if(err) console.log("query is not excuted: " + err)
-      else res.send(result)
-    })
-  } else {
-    res.redirect('/login')
-  }
+
+// 이게 있어야 특정 폴더의 파일들 전송이 가능하다
+app.use(express.static(path.join(__dirname, '../client/build')))
+
+app.get('/', (req,res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
 })
 
 app.post('/api/login', (req, res) => {
-  // res.header("Access-Control-Allow-Origin", "*")
   let userId = req.body.loginId
   let password = req.body.password
-  const sql = "SELECT * FROM users WHERE userId=? AND password=?"
-  conn.query(sql,[userId,password], function(err, result){
-    if(err) {
-      throw console.log('query is not excuted: ' + err)
+  const sql = "select * from users where userId = ? and password = ?"
+  conn.query(sql,[userId,password], (err, result) => {
+    if(err){
+      throw console.log('query is not excuted:' + err)
     }
     if(result[0] !== undefined){
+      console.log(result[0])
       req.session.userId = result[0].userId
-      req.session.isLogined =  true
-      req.session.save(function(){
+      req.session.password = result[0].password
+      req.session.name = result[0].name
+
+      req.session.save(() => {
         res.redirect('/')
       })
     }
   })
 })
 
-server.listen(8080, () => {
-  console.log('server is running on 8080')
+// 리액트 라우터가 경로 처리 하게 하고 싶을 경우 = 서버에서 라우터 안만들었을때 => 최하단에 작성
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
 })

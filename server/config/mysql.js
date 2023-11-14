@@ -1,3 +1,7 @@
+const express = require('express')
+const app = express()
+const session = require('express-session')
+const mysqlSession = require('express-mysql-session')(session)
 require('dotenv').config()
 
 // ** Data **
@@ -21,3 +25,13 @@ module.exports = {
     })
   }
 }
+
+const sessionStore = new mysqlSession(db_info)
+
+app.use(session({
+  key: "todoInfo",
+  secret: "session_cookie_secret",
+  resave: false,
+  saveUninitialized: true,
+  store: sessionStore,
+}))
