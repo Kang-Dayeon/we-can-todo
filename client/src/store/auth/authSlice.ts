@@ -1,10 +1,11 @@
 // ** RTK **
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import type {PayloadAction} from "@reduxjs/toolkit";
 // ** Redux **
 import {PURGE} from "redux-persist";
 // ** Type **
 import {IUser} from "./type";
+import axios from "axios";
 
 // 기본값
 const initialState: IUser = {
@@ -36,9 +37,52 @@ const AuthSlice = createSlice({
         // }
     },
     extraReducers: (builder) => {
-        builder.addCase(PURGE, () => initialState);
+        builder.addCase(PURGE, () => initialState)
+        // 통신중
+        builder.addCase(__getLogin.pending, (state) => {
+            state.isLogin = false
+        })
+        // 통신 성공
+            .addCase(__getLogin.fulfilled, (state, action) => {
+                state.isLogin = true
+                state.name = action.payload.name
+            })
+        //통신에러
+            .addCase(__getLogin.rejected, (state) => {
+                state.isLogin = false
+            })
     }
 })
 
 export const {login,logout} = AuthSlice.actions
 export default AuthSlice.reducer;
+
+// axios
+export interface UserFetchResult {
+    name: string | null,
+    isLogin: boolean | null
+}
+
+export interface UserInput {
+    loginId: string,
+    password: string
+}
+
+export interface AxiosResponseError {
+    error: string
+}
+
+export const __getLogin = createAsyncThunk<
+    UserFetchResult,
+    UserInput,
+    {rejectValue: AxiosResponseError}
+    >('auth/getLogin', async (arg, thunkAPI) => {
+        try {
+            return axios.post("/api/login", arg)
+        } catch(err) {
+            return thunkAPI.rejectWithValue({
+                error: 'error'
+            })
+        }
+    }
+)

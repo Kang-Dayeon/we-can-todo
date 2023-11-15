@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 // ** Redux **
 import {useDispatch} from "react-redux";
-import {login} from "../../store/auth/authSlice";
+import {__getLogin, login} from "../../store/auth/authSlice";
 import {addTodo} from "../../store/todos/todoSlice";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
@@ -15,10 +15,11 @@ import Validation from "../../components/Validation/Validation";
 // ** Library **
 import {useFormik} from "formik";
 import * as Yup from 'yup';
+import {useAppDispatch} from "../../hooks/TypedUseSelector";
 
 
 function Login(){
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const [user, setUser] = useState({
         name: '',
@@ -41,20 +42,22 @@ function Login(){
                 .required('Required'),
         }),
         onSubmit: values => {
-            axios.post("/api/login", values, {withCredentials: true})
-                .then((res) => {
-                    console.log(res.data)
-                    setUser({
-                        name: res.data.name,
-                        isLogin: res.data.isLogin
-                    })
-                    setTodos(res.data.todos)
-                }).then(() => {
-                    dispatch(login(user))
-                    dispatch(addTodo(todos))
-                }).catch((err) => {
-                    console.error(err)
-            })
+            console.log(values)
+            dispatch(__getLogin(values))
+            // axios.post("/api/login", values, {withCredentials: true})
+            //     .then((res) => {
+            //         console.log(res.data)
+            //         setUser({
+            //             name: res.data.name,
+            //             isLogin: res.data.isLogin
+            //         })
+            //         setTodos(res.data.todos)
+            //     }).then(() => {
+            //         dispatch(login(user))
+            //         dispatch(addTodo(todos))
+            //     }).catch((err) => {
+            //         console.error(err)
+            // })
         }
     })
 
