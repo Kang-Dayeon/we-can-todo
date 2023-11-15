@@ -70,7 +70,8 @@ const LogoutBtn = styled.button`
 function Header () {
     // state
     const isLogin = useAppSelector(state => state.auth.isLogin)
-    const userName = useAppSelector(state => state.auth.loginUser !== undefined ? state.auth.loginUser.name : undefined)
+    // const userName = useAppSelector(state => state.auth.loginUser !== undefined ? state.auth.loginUser.name : undefined)
+    const userName = "d"
     const [nowTime, setNowTime] = useState(Date.now())
 
     // hook

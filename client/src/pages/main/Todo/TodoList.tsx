@@ -11,6 +11,8 @@ function TodoList(){
     // state
     const todos = useAppSelector((state) => state.todos);
 
+    console.log(todos)
+
     return (
         <>
             <List title={'TODO'}>

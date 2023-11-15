@@ -57,19 +57,19 @@ const RemoveBtn = styled.button`
 
 function TodoItem(todoItem:ITodo){
     // reducer
-    const { onToggle, onRemove } = useTodoAction(todoItem.id);
+    // const { onToggle, onRemove } = useTodoAction(todoItem.id);
     // props
     const completedProps = todoItem.completed
 
     // handler function
     const toggleHandler = (e: React.MouseEvent<HTMLLabelElement>) => {
         e.preventDefault()
-        onToggle()
+        // onToggle()
     }
 
     const removeHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        if(window.confirm('정말 삭제하시겠습니까?')) onRemove()
+        // if(window.confirm('정말 삭제하시겠습니까?')) onRemove()
     }
 
     return (
@@ -84,7 +84,7 @@ function TodoItem(todoItem:ITodo){
                     </CheckLabel>
                 </div>
                 <TodoText completed={completedProps.toString()}>
-                    {todoItem.text}
+                    {todoItem.content}
                 </TodoText>
             </ItemWrap>
             <RemoveBtn onClick={removeHandler}>
