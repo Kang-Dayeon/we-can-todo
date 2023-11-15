@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
 // ** Redux **
 import {useDispatch} from "react-redux";
 import {login} from "../../store/auth/authSlice";
+import {addTodo} from "../../store/todos/todoSlice";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Content from "../../layout/Content";
@@ -15,8 +16,16 @@ import Validation from "../../components/Validation/Validation";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 
+
 function Login(){
     const dispatch = useDispatch()
+
+    const [user, setUser] = useState({
+        name: '',
+        isLogin: false
+    })
+
+    const [todos, setTodos] = useState([])
 
     const formik = useFormik({
         initialValues: {
@@ -34,14 +43,18 @@ function Login(){
         onSubmit: values => {
             axios.post("/api/login", values, {withCredentials: true})
                 .then((res) => {
-                    console.log(window.sessionStorage.getItem("todoInfo"))
-                    // console.log(res.data)
-                })
-
-            dispatch(login({
-                loginId: values.loginId,
-                password: values.password
-            }))
+                    console.log(res.data)
+                    setUser({
+                        name: res.data.name,
+                        isLogin: res.data.isLogin
+                    })
+                    setTodos(res.data.todos)
+                }).then(() => {
+                    dispatch(login(user))
+                    dispatch(addTodo(todos))
+                }).catch((err) => {
+                    console.error(err)
+            })
         }
     })
 

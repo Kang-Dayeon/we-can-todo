@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 // ** Redux **
 import {useDispatch} from "react-redux";
-import {signup} from "../../store/auth/authSlice";
+// import {signup} from "../../store/auth/authSlice";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Content from "../../layout/Content";
@@ -37,11 +37,11 @@ function SignUp(){
                 .required('Required'),
         }),
         onSubmit: values => {
-            dispatch(signup({
-                name: values.name,
-                loginId: values.loginId,
-                password: values.password
-            }))
+            // dispatch(signup({
+            //     name: values.name,
+            //     loginId: values.loginId,
+            //     password: values.password
+            // }))
             navigate('/')
         }
     })
