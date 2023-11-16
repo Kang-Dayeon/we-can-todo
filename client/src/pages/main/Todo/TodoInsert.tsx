@@ -51,7 +51,7 @@ function TodoInsert() {
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
-        addTodo(value)
+        // addTodo(value)
         setValue('')
     };
 

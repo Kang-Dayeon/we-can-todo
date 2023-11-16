@@ -1,5 +1,9 @@
 export interface ITodo {
     id: number;
     content: string;
-    completed: boolean;
+    completed: number;
+}
+
+export interface ITodoList {
+    todoList: ITodo[]
 }

@@ -9,32 +9,35 @@ import NoContent from "./NoContent";
 
 function TodoList(){
     // state
-    const todos = useAppSelector((state) => state.todos);
-
-    console.log(todos)
+    const todoList = useAppSelector((state) => state.todos.todoList);
 
     return (
         <>
-            <List title={'TODO'}>
-                {todos.length === 0 ?
-                    <NoContent/> :
-                    <ul>
-                        {todos.map((todo: ITodo) => (
-                            todo.completed ? '' : <TodoItem {...todo} />
-                        ))}
-                    </ul>
-                }
-            </List>
-            <List title={'COMPLETED'}>
-                {todos.length === 0 ?
-                    <NoContent/> :
-                    <ul>
-                        {todos.map((todo: ITodo) => (
-                            todo.completed ? <TodoItem {...todo} /> : ''
-                        ))}
-                    </ul>
-                }
-            </List>
+            {todoList === undefined ?
+                <></> :
+                <>
+                    <List title={'TODO'}>
+                        {todoList.length === 0 ?
+                            <NoContent/> :
+                            <ul>
+                                {todoList.map((todo) => (
+                                    todo.completed ? '' : <TodoItem {...todo} />
+                                ))}
+                            </ul>
+                        }
+                    </List>
+                    <List title={'COMPLETED'}>
+                    {todoList.length === 0 ?
+                        <NoContent/> :
+                        <ul>
+                            {todoList.map((todo) => (
+                                todo.completed ? <TodoItem {...todo} /> : ''
+                            ))}
+                        </ul>
+                    }
+                    </List>
+                </>
+            }
         </>
     );
 }

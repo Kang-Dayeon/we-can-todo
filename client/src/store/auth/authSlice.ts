@@ -17,12 +17,12 @@ const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<IUser>) => {
-            if(action.payload.isLogin){
-                state.isLogin = true
-                state.name = action.payload.name
-            }
-        },
+        // login: (state, action: PayloadAction<IUser>) => {
+        //     if(action.payload.isLogin){
+        //         state.isLogin = true
+        //         state.name = action.payload.name
+        //     }
+        // },
         logout: (state) => {
             state.isLogin = false
         },
@@ -45,6 +45,7 @@ const AuthSlice = createSlice({
         // 통신 성공
             .addCase(__getLogin.fulfilled, (state, action) => {
                 state.isLogin = true
+                state.userId = action.payload.userId
                 state.name = action.payload.name
             })
         //통신에러
@@ -54,11 +55,12 @@ const AuthSlice = createSlice({
     }
 })
 
-export const {login,logout} = AuthSlice.actions
+export const {logout} = AuthSlice.actions
 export default AuthSlice.reducer;
 
 // axios
 export interface UserFetchResult {
+    userId: number | null,
     name: string | null,
     isLogin: boolean | null
 }
@@ -78,7 +80,7 @@ export const __getLogin = createAsyncThunk<
     {rejectValue: AxiosResponseError}
     >('auth/getLogin', async (arg, thunkAPI) => {
         try {
-            return axios.post("/api/login", arg)
+            return axios.post("/api/login", arg).then((res) => res.data)
         } catch(err) {
             return thunkAPI.rejectWithValue({
                 error: 'error'

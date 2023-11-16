@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 // ** Redux **
-import {useDispatch} from "react-redux";
-import {__getLogin, login} from "../../store/auth/authSlice";
-import {addTodo} from "../../store/todos/todoSlice";
+import {__getLogin} from "../../store/auth/authSlice";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Content from "../../layout/Content";
@@ -15,18 +13,19 @@ import Validation from "../../components/Validation/Validation";
 // ** Library **
 import {useFormik} from "formik";
 import * as Yup from 'yup';
+// ** Hook **
 import {useAppDispatch} from "../../hooks/TypedUseSelector";
 
 
 function Login(){
     const dispatch = useAppDispatch()
-
-    const [user, setUser] = useState({
-        name: '',
-        isLogin: false
-    })
-
-    const [todos, setTodos] = useState([])
+    //
+    // const [user, setUser] = useState({
+    //     name: '',
+    //     isLogin: false
+    // })
+    //
+    // const [todos, setTodos] = useState([])
 
     const formik = useFormik({
         initialValues: {
@@ -42,8 +41,8 @@ function Login(){
                 .required('Required'),
         }),
         onSubmit: values => {
-            console.log(values)
             dispatch(__getLogin(values))
+
             // axios.post("/api/login", values, {withCredentials: true})
             //     .then((res) => {
             //         console.log(res.data)

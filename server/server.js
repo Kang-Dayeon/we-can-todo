@@ -60,8 +60,8 @@ app.post('/api/login', (req, res) => {
   let userId = req.body.loginId
   let password = req.body.password
   let sendData = {
+    userId: null,
     name: "",
-    todos: [],
     isLogin: false,
   }
   const sql = "select * from users where userId = ? and password = ?"
@@ -70,27 +70,37 @@ app.post('/api/login', (req, res) => {
       throw console.log('query is not excuted:' + err)
     }
     if(result[0] !== undefined){
-      console.log(result[0])
-      let id = result[0].id
-      conn.query("select * from todolist where userId = ?", [id], (err, data) => {
-        if(err){
-          throw console.log('query is not excuted2:' + err)
-        }
-        console.log(data[0])
-        sendData.isLogin = true
-        sendData.todos.push(data[0])
-        sendData.name = result[0].name
-        req.session.name = sendData.name
-        req.session.isLogin = sendData.isLogin
-        req.session.todos = sendData.todos
+      sendData.isLogin = true
+      sendData.name = result[0].name
+      sendData.userId = result[0].id
+      req.session.name = sendData.name
+      req.session.isLogin = sendData.isLogin
+      req.session.userId = sendData.userId
 
-        req.session.save(() => {
-          res.send(sendData)
-        })
+      req.session.save(() => {
+        res.send(sendData)
       })
-
     }
   })
+})
+
+app.post('/api/todolist', (req, res) => {
+  let id = req.body.userId
+  let todoList = []
+
+  if(id !== undefined){
+    conn.query("select * from todolist where userId = ?", [id], (err, data) => {
+      if(err){
+        throw console.log('query is not excuted3:' + err)
+      }
+
+      todoList.push(...data)
+      req.session.todoList = todoList
+      req.session.save(() => {
+        res.send(todoList)
+      })
+    })
+  }
 })
 
 // 리액트 라우터가 경로 처리 하게 하고 싶을 경우 = 서버에서 라우터 안만들었을때 => 최하단에 작성

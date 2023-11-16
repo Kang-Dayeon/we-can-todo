@@ -59,7 +59,7 @@ function TodoItem(todoItem:ITodo){
     // reducer
     // const { onToggle, onRemove } = useTodoAction(todoItem.id);
     // props
-    const completedProps = todoItem.completed
+    const completedProps = todoItem.completed === 0 ? 'false' : 'true'
 
     // handler function
     const toggleHandler = (e: React.MouseEvent<HTMLLabelElement>) => {
@@ -73,17 +73,17 @@ function TodoItem(todoItem:ITodo){
     }
 
     return (
-        <TodoList completed={completedProps.toString()}>
+        <TodoList completed={completedProps}>
             <ItemWrap>
                 <div>
                     <CheckBox id="check"></CheckBox>
                     <CheckLabel
                         htmlFor="check"
                         onClick={toggleHandler}
-                        completed={completedProps.toString()}>
+                        completed={completedProps}>
                     </CheckLabel>
                 </div>
-                <TodoText completed={completedProps.toString()}>
+                <TodoText completed={completedProps}>
                     {todoItem.content}
                 </TodoText>
             </ItemWrap>
