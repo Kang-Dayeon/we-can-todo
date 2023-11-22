@@ -70,8 +70,7 @@ const LogoutBtn = styled.button`
 function Header () {
     // state
     const isLogin = useAppSelector(state => state.auth.isLogin)
-    // const userName = useAppSelector(state => state.auth.loginUser !== undefined ? state.auth.loginUser.name : undefined)
-    const userName = "d"
+    const name = useAppSelector(state => state.auth.name !== undefined ? state.auth.name : undefined)
     const [nowTime, setNowTime] = useState(Date.now())
 
     // hook
@@ -97,7 +96,7 @@ function Header () {
                 </LogoutBtn> : <></>
             }
             <Title isLogin={isLogin.toString()}>
-                {isLogin ? `What's up, ${userName}!` : 'MY TODO APP'}
+                {isLogin ? `What's up, ${name}!` : 'MY TODO APP'}
                 <TimeWrap isLogin={isLogin.toString()}>
                     <Time>
                         <Moment format="YY-MM-DD HH:mm">{nowTime}</Moment>
