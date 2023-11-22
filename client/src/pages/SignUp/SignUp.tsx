@@ -1,8 +1,7 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
 // ** Redux **
-import {useDispatch} from "react-redux";
-// import {signup} from "../../store/auth/authSlice";
+import {__register} from "../../store/auth/authSlice";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Content from "../../layout/Content";
@@ -14,36 +13,38 @@ import Validation from "../../components/Validation/Validation";
 // ** Library **
 import {useFormik} from "formik";
 import * as Yup from 'yup';
+// ** Hook **
+import {useAppDispatch} from "../../hooks/TypedUseSelector";
 
 function SignUp(){
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: {
             name: '',
-            loginId: '',
+            username: '',
             password: ''
         },
         validationSchema: Yup.object({
             name: Yup.string()
                 .max(15, 'Must be 15 characters of less')
                 .required('Required'),
-            loginId: Yup.string()
+            username: Yup.string()
                 .max(15, 'Must be 15 characters of less')
                 .required('Required'),
             password: Yup.string()
                 .max(15, 'Must be 15 characters of less')
                 .required('Required'),
         }),
-        onSubmit: values => {
-            // dispatch(signup({
-            //     name: values.name,
-            //     loginId: values.loginId,
-            //     password: values.password
-            // }))
+        onSubmit: async (values) => {
+        try {
+            await dispatch(__register(values))
             navigate('/')
+        } catch (err){
+            console.log(err)
         }
+    }
     })
 
     return (
@@ -64,14 +65,14 @@ function SignUp(){
                     ): null}
                     <InputText
                         type="text"
-                        name="loginId"
+                        name="username"
                         placeholder="ID"
-                        value={formik.values.loginId || ''}
+                        value={formik.values.username || ''}
                         onChange={formik.handleChange}
-                        {...formik.getFieldProps('loginId')}
+                        {...formik.getFieldProps('username')}
                     />
-                    {formik.touched.loginId && formik.errors.loginId ? (
-                        <Validation>{formik.errors.loginId}</Validation>
+                    {formik.touched.username && formik.errors.username ? (
+                        <Validation>{formik.errors.username}</Validation>
                     ): null}
                     <InputText
                         type="password"
