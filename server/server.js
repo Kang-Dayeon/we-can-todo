@@ -55,27 +55,30 @@ app.get('/', (req,res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'))
 })
 
-// 로그인시
+// 로그인
 app.post('/api/login', (req, res) => {
-  let userId = req.body.loginId
+  let username = req.body.username
   let password = req.body.password
   let sendData = {
-    userId: null,
+    userID: null,
+    username: null,
     name: "",
     isLogin: false,
   }
-  const sql = "select * from users where userId = ? and password = ?"
-  conn.query(sql,[userId,password], (err, result) => {
+  const sql = "select * from users where Username = ? and password = ?"
+  conn.query(sql,[username,password], (err, result) => {
     if(err){
       throw console.log('query is not excuted:' + err)
     }
     if(result[0] !== undefined){
+      sendData.userID = result[0].UserID
       sendData.isLogin = true
       sendData.name = result[0].name
-      sendData.userId = result[0].id
+      sendData.username = result[0].Username
+      req.session.userID = sendData.userID
       req.session.name = sendData.name
       req.session.isLogin = sendData.isLogin
-      req.session.userId = sendData.userId
+      req.session.username = sendData.username
 
       req.session.save(() => {
         res.send(sendData)
@@ -84,24 +87,57 @@ app.post('/api/login', (req, res) => {
   })
 })
 
+// 회원가입
+app.post('/api/register', (req, res) => {
+  let user = {
+    name: req.body.name,
+    username: req.body.username,
+    password: req.body.password
+  }
+
+  const findUser = "select * from users where Username = ?"
+  const insertQuery = "insert into users (Username, password, name) values(?, ?, ?)"
+
+  conn.query(findUser,[user.username], (err, result) => {
+    if(err){
+      throw console.log('register err:' + err)
+    }
+    if(result[0] !== undefined){
+      console.log(result[0])
+      res.send(alert('이미 존재하는 아이디 입니다.'))
+    } else {
+      conn.query(insertQuery, [user.username, user.password, user.name], (err, result) => {
+        if(err){
+          throw console.log('회원가입 실패:' + err)
+        }
+      })
+    }
+  })
+})
+
+// todo list 불러오기
 app.post('/api/todolist', (req, res) => {
-  let id = req.body.userId
+  let username = req.body.username
   let todoList = []
 
-  if(id !== undefined){
-    conn.query("select * from todolist where userId = ?", [id], (err, data) => {
-      if(err){
-        throw console.log('query is not excuted3:' + err)
-      }
-
-      todoList.push(...data)
-      req.session.todoList = todoList
-      req.session.save(() => {
-        res.send(todoList)
+  conn.query("select * from users where Username = ?", [username], (err, result) => {
+    if(err){
+      throw console.log('todo list 불러오기 에러:' + err)
+    }
+    if(result[0] !== undefined){
+      let userID = result[0].UserID
+      conn.query("select * from todolist where UserID = ?", [userID], (err, result) => {
+        todoList.push(...result)
+        req.session.todoList = todoList
+        req.session.save(() => {
+          res.send(todoList)
+        })
       })
-    })
-  }
+    }
+  })
+
 })
+
 
 // 리액트 라우터가 경로 처리 하게 하고 싶을 경우 = 서버에서 라우터 안만들었을때 => 최하단에 작성
 app.get('*', (req, res) => {
