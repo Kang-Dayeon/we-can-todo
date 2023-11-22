@@ -1,7 +1,6 @@
-import React, {useState} from "react";
-import axios from "axios";
+import React from "react";
 // ** Redux **
-import {__getLogin} from "../../store/auth/authSlice";
+import {__login} from "../../store/auth/authSlice";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Content from "../../layout/Content";
@@ -19,21 +18,14 @@ import {useAppDispatch} from "../../hooks/TypedUseSelector";
 
 function Login(){
     const dispatch = useAppDispatch()
-    //
-    // const [user, setUser] = useState({
-    //     name: '',
-    //     isLogin: false
-    // })
-    //
-    // const [todos, setTodos] = useState([])
 
     const formik = useFormik({
         initialValues: {
-            loginId: '',
+            username: '',
             password: ''
         },
         validationSchema: Yup.object({
-            loginId: Yup.string()
+            username: Yup.string()
                 .max(15, 'Must be 15 characters of less')
                 .required('Required'),
             password: Yup.string()
@@ -41,22 +33,7 @@ function Login(){
                 .required('Required'),
         }),
         onSubmit: values => {
-            dispatch(__getLogin(values))
-
-            // axios.post("/api/login", values, {withCredentials: true})
-            //     .then((res) => {
-            //         console.log(res.data)
-            //         setUser({
-            //             name: res.data.name,
-            //             isLogin: res.data.isLogin
-            //         })
-            //         setTodos(res.data.todos)
-            //     }).then(() => {
-            //         dispatch(login(user))
-            //         dispatch(addTodo(todos))
-            //     }).catch((err) => {
-            //         console.error(err)
-            // })
+            dispatch(__login(values))
         }
     })
 
@@ -67,14 +44,14 @@ function Login(){
                 <form onSubmit={formik.handleSubmit}>
                     <InputText
                         type="text"
-                        name="loginId"
+                        name="username"
                         placeholder="ID"
-                        value={formik.values.loginId || ''}
+                        value={formik.values.username || ''}
                         onChange={formik.handleChange}
-                        {...formik.getFieldProps('loginId')}
+                        {...formik.getFieldProps('username')}
                     />
-                    {formik.touched.loginId && formik.errors.loginId ? (
-                        <Validation>{formik.errors.loginId}</Validation>
+                    {formik.touched.username && formik.errors.username ? (
+                        <Validation>{formik.errors.username}</Validation>
                     ): null}
                     <InputText
                         type="password"

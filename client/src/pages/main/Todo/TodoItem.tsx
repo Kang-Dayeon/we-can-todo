@@ -1,6 +1,4 @@
 import React from "react";
-// ** Hook **
-import useTodoAction from "../../../hooks/useTodoAction";
 // ** Type **
 import {ITodo} from "../../../store/todos/type";
 import styled from "styled-components";
@@ -56,20 +54,16 @@ const RemoveBtn = styled.button`
 `
 
 function TodoItem(todoItem:ITodo){
-    // reducer
-    // const { onToggle, onRemove } = useTodoAction(todoItem.id);
     // props
     const completedProps = todoItem.completed === 0 ? 'false' : 'true'
 
     // handler function
     const toggleHandler = (e: React.MouseEvent<HTMLLabelElement>) => {
         e.preventDefault()
-        // onToggle()
     }
 
     const removeHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        // if(window.confirm('정말 삭제하시겠습니까?')) onRemove()
     }
 
     return (

@@ -38,13 +38,11 @@ const TodosSlice = createSlice({
     }
 })
 
-// export const {addTodo,toggleTodo,removeTodo} = TodosSlice.actions
-// export const {addTodo} = TodosSlice.actions
 export default TodosSlice.reducer;
 
 // axios
 export interface userInput {
-    userId: number
+    userID: number
 }
 export interface AxiosResponseError {
     error: string

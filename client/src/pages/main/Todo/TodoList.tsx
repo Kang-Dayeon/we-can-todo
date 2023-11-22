@@ -1,5 +1,3 @@
-// ** Type **
-import {ITodo} from "../../../store/todos/type";
 // ** Hook **
 import {useAppSelector} from "../../../hooks/TypedUseSelector";
 // ** Component **

@@ -13,7 +13,7 @@ import {__getTodoList} from "../../store/todos/todoSlice";
 
 function Main() {
     const isLogin = useAppSelector(state => state.auth.isLogin)
-    const userId = useAppSelector(state => state.auth.userId)
+    const userID = useAppSelector(state => state.auth.userID)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
@@ -22,8 +22,8 @@ function Main() {
     },[])
 
     useEffect(() => {
-        if(isLogin){
-            dispatch(__getTodoList({userId}))
+        if(userID){
+            dispatch(__getTodoList({userID}))
         }
     }, []);
 
