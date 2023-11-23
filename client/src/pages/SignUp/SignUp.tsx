@@ -14,11 +14,13 @@ import Validation from "../../components/Validation/Validation";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 // ** Hook **
-import {useAppDispatch} from "../../hooks/TypedUseSelector";
+import {useAppDispatch, useAppSelector} from "../../hooks/TypedUseSelector";
 
 function SignUp(){
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const isRegister = useAppSelector(state => state.auth.isRegister)
 
     const formik = useFormik({
         initialValues: {
@@ -40,7 +42,13 @@ function SignUp(){
         onSubmit: async (values) => {
         try {
             await dispatch(__register(values))
-            navigate('/')
+            if(isRegister){
+                alert("회원가입이 완료 되었습니다🎉")
+                navigate('/')
+            } else {
+                alert("이미 존재하는 아이디 입니다😥")
+            }
+
         } catch (err){
             console.log(err)
         }

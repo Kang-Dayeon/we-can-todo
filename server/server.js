@@ -83,6 +83,27 @@ app.post('/api/login', (req, res) => {
       req.session.save(() => {
         res.send(sendData)
       })
+    } else {
+      conn.query("select * from users where Username = ?",[username], (err, result) => {
+        if(err){
+          throw console.log('아이디 찾기 에러:' + err)
+        }
+        if(result[0] !== undefined){
+          console.log(result[0])
+          sendData.name = result[0].name
+          sendData.isLogin = false
+          req.session.isLogin = sendData.isLogin
+          req.session.username = sendData.username
+
+          req.session.save(() => {
+            res.send(sendData)
+          })
+        } else {
+          req.session.save(() => {
+            res.send(sendData)
+          })
+        }
+      })
     }
   })
 })
@@ -103,12 +124,15 @@ app.post('/api/register', (req, res) => {
       throw console.log('register err:' + err)
     }
     if(result[0] !== undefined){
-      console.log(result[0])
-      res.send(alert('이미 존재하는 아이디 입니다.'))
+      console.log("이미존재함")
+      res.send(false)
     } else {
       conn.query(insertQuery, [user.username, user.password, user.name], (err, result) => {
         if(err){
           throw console.log('회원가입 실패:' + err)
+        } else {
+          res.send(true)
+          // res.send('회원가입이 완료 되었습니다.')
         }
       })
     }

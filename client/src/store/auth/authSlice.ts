@@ -9,7 +9,9 @@ import axios from "axios";
 // 기본값
 const initialState: IUser = {
     name: '',
-    isLogin: false
+    username: '',
+    isLogin: false,
+    isRegister: false
 }
 
 const AuthSlice = createSlice({
@@ -28,7 +30,7 @@ const AuthSlice = createSlice({
         })
         // 통신 성공
             .addCase(__login.fulfilled, (state, action) => {
-                state.isLogin = true
+                state.isLogin = action.payload.isLogin
                 state.userID = action.payload.userID
                 state.username = action.payload.username
                 state.name = action.payload.name
@@ -39,15 +41,15 @@ const AuthSlice = createSlice({
             })
         // 통신중
         builder.addCase(__register.pending, (state) => {
-            state.isLogin = false
+            state.isRegister = false
         })
             // 통신 성공
             .addCase(__register.fulfilled, (state, action) => {
-                console.log(action.payload)
+                state.isRegister = action.payload.isRegister
             })
             //통신에러
             .addCase(__register.rejected, (state) => {
-                state.isLogin = false
+                state.isRegister = false
             })
     }
 })
@@ -60,7 +62,11 @@ export interface UserFetchResult {
     userID: number | null,
     username: string | null,
     name: string | null,
-    isLogin: boolean | null
+    isLogin: boolean | null,
+}
+
+export interface Register extends UserFetchResult{
+    isRegister: boolean | null
 }
 
 export interface UserInput {
@@ -89,12 +95,12 @@ export const __login = createAsyncThunk<
 )
 
 export const __register = createAsyncThunk<
-    UserFetchResult,
+    Register,
     UserInput,
     {rejectValue: AxiosResponseError}
     >('auth/register',async (arg, thunkAPI) => {
         try {
-            axios.post("api/register", arg).then((res) => res.data)
+            return axios.post("api/register", arg).then((res) => res.data)
         } catch (err) {
             return thunkAPI.rejectWithValue({
                 error: 'error'

@@ -13,11 +13,14 @@ import Validation from "../../components/Validation/Validation";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 // ** Hook **
-import {useAppDispatch} from "../../hooks/TypedUseSelector";
+import {useAppDispatch, useAppSelector} from "../../hooks/TypedUseSelector";
 
 
 function Login(){
     const dispatch = useAppDispatch()
+
+    const isLogin = useAppSelector(state => state.auth.isLogin)
+    const isUsername = useAppSelector(state => state.auth.username)
 
     const formik = useFormik({
         initialValues: {
@@ -32,8 +35,21 @@ function Login(){
                 .max(15, 'Must be 15 characters of less')
                 .required('Required'),
         }),
-        onSubmit: values => {
-            dispatch(__login(values))
+        onSubmit: async values => {
+            try {
+                await dispatch(__login(values))
+                if(!isLogin){
+                    if(isUsername !== '' && !isLogin){
+                        console.log(isLogin)
+                        alert("비밀번호가 일치하지 않습니다!")
+                    } else if(isUsername === '' && !isLogin){
+                        console.log(isLogin)
+                        alert("아이디가 일치하지 않습니다!")
+                    }
+                }
+            } catch (err){
+                console.log(err)
+            }
         }
     })
 

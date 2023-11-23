@@ -1,6 +1,7 @@
 export interface IUser {
     userID?: number;
-    username?: string;
+    username: string;
     name: string;
     isLogin: boolean;
+    isRegister: boolean;
 }
