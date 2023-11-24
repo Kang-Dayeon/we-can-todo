@@ -85,7 +85,7 @@ export const __login = createAsyncThunk<
     {rejectValue: AxiosResponseError}
     >('auth/getLogin', async (arg, thunkAPI) => {
         try {
-            return axios.post("/api/login", arg).then((res) => res.data)
+            return axios.post("/auth/login", arg).then((res) => res.data)
         } catch(err) {
             return thunkAPI.rejectWithValue({
                 error: 'error'
@@ -100,7 +100,7 @@ export const __register = createAsyncThunk<
     {rejectValue: AxiosResponseError}
     >('auth/register',async (arg, thunkAPI) => {
         try {
-            return axios.post("api/register", arg).then((res) => res.data)
+            return axios.post("auth/register", arg).then((res) => res.data)
         } catch (err) {
             return thunkAPI.rejectWithValue({
                 error: 'error'

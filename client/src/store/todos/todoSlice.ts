@@ -54,7 +54,7 @@ export const __getTodoList = createAsyncThunk<
     {rejectValue: AxiosResponseError}
     >('todo/getTodolist', async (arg,thunkAPI) => {
         try {
-            return axios.post("/api/todolist", arg).then((res) => res.data)
+            return axios.post("/todo/todolist", arg).then((res) => res.data)
         } catch(err) {
             return thunkAPI.rejectWithValue({
                 error: 'error'
