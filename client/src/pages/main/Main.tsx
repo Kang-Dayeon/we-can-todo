@@ -17,8 +17,6 @@ function Main() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-    console.log(isLogin)
-
     useEffect(() => {
         isLogin ? navigate('/') : navigate('/login')
     },[])

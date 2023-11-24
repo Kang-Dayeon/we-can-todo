@@ -7,10 +7,10 @@ const conn = db.init()
 
 // todo list 불러오기
 router.post('/todolist', (req, res) => {
-  let username = req.body.username
+  let userID = req.body.userID
   let todoList = []
 
-  conn.query("select * from users where Username = ?", [username], (err, result) => {
+  conn.query("select * from users where UserID = ?", [userID], (err, result) => {
     if(err){
       throw console.log('todo list 불러오기 에러:' + err)
     }
@@ -23,6 +23,26 @@ router.post('/todolist', (req, res) => {
           res.send(todoList)
         })
       })
+    }
+  })
+})
+
+// add todo
+router.post('/add-todo',(req, res) => {
+  let todo = {
+    content: req.body.content,
+    completed: 0,
+    userID: req.body.userID
+  }
+
+  // const findUser = "select * from users where UserID = ?"
+  const insertTodo = "insert into todolist (content, completed, UserID) values(?,?,?)"
+
+  conn.query(insertTodo,[todo.content, todo.completed, todo.userID], (err, result) => {
+    if(err){
+      throw console.log('add todo error : ' + err)
+    } else {
+      res.send(todo)
     }
   })
 })

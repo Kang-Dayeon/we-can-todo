@@ -32,8 +32,18 @@ const TodosSlice = createSlice({
                 state.todoList = action.payload
             })
             //통신에러
-            .addCase(__getTodoList.rejected, (state) => {
-                state.todoList = []
+            .addCase(__getTodoList.rejected, (state, action) => {
+                console.log(action.payload)
+            })
+        builder.addCase(__addTodo.pending, (state) => {
+            console.log(state.todoList)
+        })
+            .addCase(__addTodo.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.todoList.push(action.payload)
+            })
+            .addCase(__addTodo.rejected, (state, action) => {
+                console.log(action.payload)
             })
     }
 })
@@ -62,3 +72,17 @@ export const __getTodoList = createAsyncThunk<
         }
     }
 )
+
+export const __addTodo = createAsyncThunk<
+    ITodo,
+    ITodo,
+    {rejectValue: AxiosResponseError}
+    >('todo/addTodo', async (arg, thunkAPI) => {
+        try {
+            return axios.post("/todo/add-todo", arg).then((res) => res.data)
+        } catch (err){
+            return thunkAPI.rejectWithValue({
+                error: 'error'
+            })
+        }
+})
