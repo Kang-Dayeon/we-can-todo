@@ -67,7 +67,7 @@ router.post('/register', (req, res) => {
   }
 
   const findUser = "select * from users where Username = ?"
-  const insertQuery = "insert into users (Username, password, name) values(?, ?, ?)"
+  const insertUser = "insert into users (Username, password, name) values(?, ?, ?)"
 
   conn.query(findUser,[user.username], (err, result) => {
     if(err){
@@ -77,12 +77,11 @@ router.post('/register', (req, res) => {
       console.log("이미존재함")
       res.send(false)
     } else {
-      conn.query(insertQuery, [user.username, user.password, user.name], (err, result) => {
+      conn.query(insertUser, [user.username, user.password, user.name], (err, result) => {
         if(err){
           throw console.log('회원가입 실패:' + err)
         } else {
           res.send(true)
-          // res.send('회원가입이 완료 되었습니다.')
         }
       })
     }
