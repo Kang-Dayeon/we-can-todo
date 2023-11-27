@@ -3,5 +3,6 @@ export interface IUser {
     username: string,
     name: string,
     isLogin: boolean,
-    isRegister: boolean
+    isRegister?: boolean,
+    failLogin?: string
 }

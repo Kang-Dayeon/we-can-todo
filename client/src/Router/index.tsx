@@ -16,13 +16,13 @@ const Routers = () => {
 
     // function
     useEffect(() => {
-        isLogin ? navigate('/') : navigate('/login')
+        isLogin ? navigate('/') : navigate('/login-page')
     }, [isLogin])
 
     return (
         <Routes>
             <Route path="/" element={<Main/>}></Route>
-            <Route path="/login" element={<Login/>}></Route>
+            <Route path="/login-page" element={<Login/>}></Route>
             <Route path="/sign-up" element={<SignUp/>}></Route>
         </Routes>
     )

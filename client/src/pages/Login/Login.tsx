@@ -1,6 +1,7 @@
 import React from "react";
+import {useEffect} from "react";
 // ** Redux **
-import {__login} from "../../store/auth/authSlice";
+import {__login, setFailLogin} from "../../store/auth/authSlice";
 // ** Component **
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import Content from "../../layout/Content";
@@ -20,7 +21,7 @@ function Login(){
     const dispatch = useAppDispatch()
 
     const isLogin = useAppSelector(state => state.auth.isLogin)
-    const isUsername = useAppSelector(state => state.auth.username)
+    const failLogin = useAppSelector(state => state.auth.failLogin)
 
     const formik = useFormik({
         initialValues: {
@@ -38,20 +39,19 @@ function Login(){
         onSubmit: async values => {
             try {
                 await dispatch(__login(values))
-                if(!isLogin){
-                    if(isUsername !== '' && !isLogin){
-                        console.log(isLogin)
-                        alert("비밀번호가 일치하지 않습니다!")
-                    } else if(isUsername === '' && !isLogin){
-                        console.log(isLogin)
-                        alert("아이디가 일치하지 않습니다!")
-                    }
-                }
             } catch (err){
                 console.log(err)
             }
         }
     })
+
+    useEffect(() => {
+        if(!isLogin && failLogin.length > 0) {
+            alert(failLogin)
+            dispatch(setFailLogin())
+        }
+    }, [failLogin]);
+
 
     return (
         <LayoutWrapper>

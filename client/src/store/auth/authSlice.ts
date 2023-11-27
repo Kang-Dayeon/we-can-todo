@@ -11,7 +11,8 @@ const initialState: IUser = {
     name: '',
     username: '',
     isLogin: false,
-    isRegister: false
+    isRegister: false,
+    failLogin: ''
 }
 
 const AuthSlice = createSlice({
@@ -21,6 +22,9 @@ const AuthSlice = createSlice({
         logout: (state) => {
             state.isLogin = false
         },
+        setFailLogin: (state) => {
+            state.failLogin = ''
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(PURGE, () => initialState)
@@ -30,10 +34,16 @@ const AuthSlice = createSlice({
         })
         // 통신 성공
             .addCase(__login.fulfilled, (state, action) => {
-                state.isLogin = action.payload.isLogin
-                state.userID = action.payload.userID
-                state.username = action.payload.username
-                state.name = action.payload.name
+                if(action.payload.isLogin){
+                    state.isLogin = action.payload.isLogin
+                    state.userID = action.payload.userID
+                    state.username = action.payload.username
+                    state.name = action.payload.name
+                    console.log(action.payload.isLogin)
+                    console.log(state.isLogin)
+                } else {
+                    state.failLogin = action.payload.failLogin
+                }
             })
         //통신에러
             .addCase(__login.rejected, (state) => {
@@ -54,21 +64,10 @@ const AuthSlice = createSlice({
     }
 })
 
-export const {logout} = AuthSlice.actions
+export const {logout, setFailLogin} = AuthSlice.actions
 export default AuthSlice.reducer;
 
 // axios
-export interface UserFetchResult {
-    userID: number | null,
-    username: string | null,
-    name: string | null,
-    isLogin: boolean | null,
-}
-
-export interface Register extends UserFetchResult{
-    isRegister: boolean | null
-}
-
 export interface UserInput {
     name?: string,
     username: string,
@@ -80,7 +79,7 @@ export interface AxiosResponseError {
 }
 
 export const __login = createAsyncThunk<
-    UserFetchResult,
+    IUser,
     UserInput,
     {rejectValue: AxiosResponseError}
     >('auth/getLogin', async (arg, thunkAPI) => {
@@ -95,7 +94,7 @@ export const __login = createAsyncThunk<
 )
 
 export const __register = createAsyncThunk<
-    Register,
+    IUser,
     UserInput,
     {rejectValue: AxiosResponseError}
     >('auth/register',async (arg, thunkAPI) => {

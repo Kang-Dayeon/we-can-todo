@@ -18,7 +18,7 @@ function Main() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        isLogin ? navigate('/') : navigate('/login')
+        isLogin ? navigate('/') : navigate('/login-page')
     },[])
 
     useEffect(() => {

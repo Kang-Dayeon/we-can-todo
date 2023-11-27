@@ -94,7 +94,7 @@ function SignUp(){
                         <Validation>{formik.errors.password}</Validation>
                     ): null}
                     <Button type="submit">Sign Up</Button>
-                    <Anchor link="/login">Login</Anchor>
+                    <Anchor link="/login-page">Login</Anchor>
                 </form>
             </Content>
         </LayoutWrapper>
