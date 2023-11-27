@@ -18,10 +18,7 @@ router.post('/todolist', (req, res) => {
       let userID = result[0].UserID
       conn.query("select * from todolist where UserID = ?", [userID], (err, result) => {
         todoList.push(...result)
-        req.session.todoList = todoList
-        req.session.save(() => {
-          res.send(todoList)
-        })
+        res.send(todoList)
       })
     }
   })

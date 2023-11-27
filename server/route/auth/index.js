@@ -11,49 +11,35 @@ router.post('/login', (req, res) => {
   let password = req.body.password
   let sendData = {
     userID: null,
-    username: null,
+    username: '',
     name: "",
     isLogin: false,
+    failLogin: ''
   }
-  const sql = "select * from users where Username = ? and password = ?"
-  conn.query(sql,[username,password], (err, result) => {
+
+  const sql = "select * from users where Username = ?"
+
+  conn.query(sql,[username], (err, result) => {
     if(err){
-      throw console.log('query is not excuted:' + err)
+      throw console.log('로그인 에러 :' + err)
     }
     if(result[0] !== undefined){
-      sendData.userID = result[0].UserID
-      sendData.isLogin = true
-      sendData.name = result[0].name
-      sendData.username = result[0].Username
-      req.session.userID = sendData.userID
-      req.session.name = sendData.name
-      req.session.isLogin = sendData.isLogin
-      req.session.username = sendData.username
+      console.log("?")
+      if(result[0].password === password){
+        sendData.userID = result[0].UserID
+        sendData.isLogin = true
+        sendData.name = result[0].name
+        sendData.username = result[0].Username
+        sendData.failLogin = ""
 
-      req.session.save(() => {
         res.send(sendData)
-      })
+      } else{
+        sendData.failLogin = "비밀번호가 일치하지 않습니다"
+        res.send(sendData)
+      }
     } else {
-      conn.query("select * from users where Username = ?",[username], (err, result) => {
-        if(err){
-          throw console.log('아이디 찾기 에러:' + err)
-        }
-        if(result[0] !== undefined){
-          console.log(result[0])
-          sendData.name = result[0].name
-          sendData.isLogin = false
-          req.session.isLogin = sendData.isLogin
-          req.session.username = sendData.username
-
-          req.session.save(() => {
-            res.send(sendData)
-          })
-        } else {
-          req.session.save(() => {
-            res.send(sendData)
-          })
-        }
-      })
+      sendData.failLogin = "존재하지 않는 아이디 입니다"
+      res.send(sendData)
     }
   })
 })

@@ -3,9 +3,6 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-// ** DB **
-const session = require('express-session')
-const mysqlSession = require('express-mysql-session')(session)
 // ** router **
 const authRouter = require('./route/auth')
 const todoRouter = require('./route/todo')
@@ -19,32 +16,6 @@ app.use(cors())
 
 // 이게 있어야 특정 폴더의 파일들 전송이 가능하다
 app.use(express.static(path.join(__dirname, '../client/build')))
-
-const db_info = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_ID,
-  password: process.env.DB_PW,
-  database: 'todo'
-}
-
-// mySQL session store에 db연결
-const sessionStore = new mysqlSession(db_info)
-
-app.use(session({
-  key: "todoInfo",
-  secret: "session_cookie_secret",
-  resave: false,
-  saveUninitialized: false,
-  store: sessionStore,
-}))
-
-// session store 작동시
-sessionStore.onReady().then(() => {
-  console.log('MySQLStore ready')
-}).catch((error) => {
-  console.error(error)
-})
 
 // 서버 시작하면 동작함
 app.listen(8080, function(){
