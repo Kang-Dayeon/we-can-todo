@@ -1,5 +1,4 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import type {PayloadAction} from "@reduxjs/toolkit";
 import {ITodoList,ITodo} from "./type";
 import axios from "axios";
 
@@ -11,17 +10,7 @@ const initialState: ITodoList = {
 const TodosSlice = createSlice({
     name: 'todos',
     initialState,
-    reducers: {
-        // addTodo: (state, action: PayloadAction<ITodo[]>) => {
-        //     state.push(...action.payload)
-        // },
-        // toggleTodo: (state, action: PayloadAction<number>) => {
-        //     return state.map(todo => (todo.id === action.payload ? {...todo, completed: !todo.completed} : todo))
-        // },
-        // removeTodo: (state, action: PayloadAction<number>) => {
-        //     return state.filter(todo => todo.id !== action.payload)
-        // }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         // 통신중
         builder.addCase(__getTodoList.pending, (state) => {
@@ -39,7 +28,6 @@ const TodosSlice = createSlice({
             console.log(state.todoList)
         })
             .addCase(__addTodo.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.todoList.push(action.payload)
             })
             .addCase(__addTodo.rejected, (state, action) => {
@@ -49,15 +37,16 @@ const TodosSlice = createSlice({
 })
 
 export default TodosSlice.reducer;
-
 // axios
 export interface userInput {
     userID: number
 }
+
 export interface AxiosResponseError {
     error: string
 }
 
+// 투두리스트 불러오기
 export const __getTodoList = createAsyncThunk<
     ITodo[],
     userInput,
@@ -73,6 +62,7 @@ export const __getTodoList = createAsyncThunk<
     }
 )
 
+// 투두리스트 추가
 export const __addTodo = createAsyncThunk<
     ITodo,
     ITodo,
@@ -85,4 +75,34 @@ export const __addTodo = createAsyncThunk<
                 error: 'error'
             })
         }
+})
+
+// 투두 삭제
+// TODO:좀 덜컹거리는 부분이 있음
+export const __removeTodo = createAsyncThunk<
+    ITodo,
+    ITodo,
+    {rejectValue: AxiosResponseError}
+    >('todo/removeTodo', async (arg, thunkAPI) => {
+    try {
+        axios.post("/todo/remove-todo", arg).then()
+    } catch (err){
+        return thunkAPI.rejectWithValue({
+            error: 'error'
+        })
+    }
+})
+
+export const __toggleTodo = createAsyncThunk<
+    ITodo,
+    ITodo,
+    {rejectValue: AxiosResponseError}
+    >('todo/toggleTodo', async (arg, thunkAPI) => {
+    try {
+        axios.post("/todo/toggle-todo", arg).then()
+    } catch (err){
+        return thunkAPI.rejectWithValue({
+            error: 'error'
+        })
+    }
 })

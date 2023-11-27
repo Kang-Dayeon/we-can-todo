@@ -44,4 +44,31 @@ router.post('/add-todo',(req, res) => {
   })
 })
 
+// remove todo
+router.post('/remove-todo',(req, res) => {
+  let todoID = req.body.TodoID
+
+  const deleteTodo = "delete from todolist where TodoID = ?"
+
+  conn.query(deleteTodo,[todoID], (err) => {
+    if(err){
+      throw console.log('delete todo error : ' + err)
+    }
+  })
+})
+
+// toggle todo
+router.post('/toggle-todo',(req, res) => {
+  let completed = !req.body.completed
+  let todoID = req.body.TodoID
+
+  const toggleTodo = "update todolist set completed = ? where TodoID = ?"
+
+  conn.query(toggleTodo,[completed, todoID], (err, result) => {
+    if(err){
+      throw console.log('delete todo error : ' + err)
+    }
+  })
+})
+
 module.exports = router

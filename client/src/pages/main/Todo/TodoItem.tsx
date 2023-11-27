@@ -2,6 +2,10 @@ import React from "react";
 // ** Type **
 import {ITodo} from "../../../store/todos/type";
 import styled from "styled-components";
+// ** Hook **
+import {useAppDispatch, useAppSelector} from "../../../hooks/TypedUseSelector";
+// ** redux **
+import {__getTodoList, __removeTodo, __toggleTodo} from "../../../store/todos/todoSlice";
 
 // ** Img **
 const IconCheck = require('../../../assets/images/icon/icon_check.png');
@@ -54,16 +58,34 @@ const RemoveBtn = styled.button`
 `
 
 function TodoItem(todoItem:ITodo){
+    // hook
+    const dispatch = useAppDispatch()
+    const userID = useAppSelector(state => state.auth.userID)
+
     // props
     const completedProps = todoItem.completed === 0 ? 'false' : 'true'
 
     // handler function
-    const toggleHandler = (e: React.MouseEvent<HTMLLabelElement>) => {
+    const toggleHandler = async (e: React.MouseEvent<HTMLLabelElement>) => {
         e.preventDefault()
+        try {
+            await dispatch(__toggleTodo(todoItem)).then(() => {
+                dispatch(__getTodoList({userID}))
+            })
+        } catch (err){
+            console.log(err)
+        }
     }
 
-    const removeHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const removeHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
+        try {
+            await dispatch(__removeTodo(todoItem)).then(() => {
+                dispatch(__getTodoList({userID}))
+            })
+        } catch (err){
+            console.log(err)
+        }
     }
 
     return (
