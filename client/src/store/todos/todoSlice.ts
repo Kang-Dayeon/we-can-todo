@@ -24,9 +24,9 @@ const TodosSlice = createSlice({
             .addCase(__getTodoList.rejected, (state, action) => {
                 console.log(action.payload)
             })
-        builder.addCase(__addTodo.pending, (state) => {
-            console.log(state.todoList)
-        })
+            .addCase(__addTodo.pending, (state) => {
+                console.log(state.todoList)
+            })
             .addCase(__addTodo.fulfilled, (state, action) => {
                 state.todoList.push(action.payload)
             })

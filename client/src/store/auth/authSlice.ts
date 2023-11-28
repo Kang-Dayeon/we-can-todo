@@ -50,9 +50,9 @@ const AuthSlice = createSlice({
                 state.isLogin = false
             })
         // 통신중
-        builder.addCase(__register.pending, (state) => {
-            state.isRegister = false
-        })
+            .addCase(__register.pending, (state) => {
+                state.isRegister = false
+            })
             // 통신 성공
             .addCase(__register.fulfilled, (state, action) => {
                 state.isRegister = action.payload.isRegister
