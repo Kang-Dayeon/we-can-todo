@@ -3,13 +3,36 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+// ** passport **
+const passport = require('passport')
+const session = require('express-session')
+const mySQLStore = require('express-mysql-session')
 // ** router **
 const authRouter = require('./route/auth')
 const todoRouter = require('./route/todo')
 
+require('dotenv').config()
+
 // 미들웨어
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
+// passport
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    store: new mySQLStore({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_ID,
+      password: process.env.DB_PW,
+      database: 'todo'
+    })
+  })
+)
+app.use(passport.initialize()) // passport 사용 하도록 세팅
+app.use(passport.session()) // passport 사용시 session 사용
 
 // cors 전체로 허용
 app.use(cors())
