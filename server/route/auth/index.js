@@ -7,20 +7,43 @@ const LocalStrategy = require('passport-local').Strategy
 // db 연결
 const conn = db.init()
 
-router.post('/login', passport.authenticate(
-  'local',
-  {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: false
-  }
-))
+// login data
+let sendData = {
+  userID: null,
+  username: '',
+  name: "",
+  isLogin: false,
+  failLogin: ''
+}
 
-passport.serializeUser((user, done) => { // 로그인 성공시 콜백함수 호출
+router.post('/login',(req, res) => {
+  passport.authenticate(
+    'local',
+    (err, user) => {
+      if(err){ return console.log('login err :' + err) }
+
+      let json = JSON.parse(JSON.stringify(user))
+      if(user){
+        req.logIn(user, (err) => {
+          if(err) {return console.log(err)}
+          return res.send(json)
+        })
+      } else {
+        console.log("login fail")
+        res.send(sendData)
+      }
+    })(req, res)
+})
+
+// passport가 session에 사용자의 id를 저장할 수 있도록 해줌
+// 로그인 했을때 딱 한번임
+passport.serializeUser((user, done) => {
   console.log('SreializeUser', user)
   done(null, user.username)
 })
 
+// 로그인에 성공하고 페이지에 방문할때마다 호출됨
+// session에 저장된 user id를 기준으로 DB에서 데이터를 검색하고 호출
 passport.deserializeUser((username, done) => {
   console.log('DeserializeUser', username)
 
@@ -28,10 +51,11 @@ passport.deserializeUser((username, done) => {
 
   conn.query(sql,[username], (err, result) => {
     if(err){
-      throw console.log('로그인 에러 :' + err)
+      throw console.log('session err :' + err)
     }
+
+    let user = result[0]
     if(result[0] !== undefined){
-      let user = result[0]
       done(null, user)
     } else {
       done(err)
@@ -41,23 +65,13 @@ passport.deserializeUser((username, done) => {
 
 passport.use(new LocalStrategy(
   (username, password, done) => {
-
-    let sendData = {
-      userID: null,
-      username: '',
-      name: "",
-      isLogin: false,
-      failLogin: ''
-    }
-
     const sql = "select * from users where Username = ?"
 
-    conn.query(sql,['local:' + username], (err, result) => {
+    conn.query(sql,[username], (err, result) => {
       if(err){
         return done(err)
       }
       if(result[0] !== undefined){
-        console.log("?")
         if(result[0].password === password){
           sendData.userID = result[0].UserID
           sendData.isLogin = true
@@ -65,60 +79,27 @@ passport.use(new LocalStrategy(
           sendData.username = result[0].Username
           sendData.failLogin = ""
 
-          // res.send(sendData)
           done(null, sendData)
         } else{
           sendData.failLogin = "비밀번호가 일치하지 않습니다"
-          // res.send(sendData)
-          done(null, sendData)
+          done(null, false, {message: "비밀번호가 일치하지 않습니다"})
         }
       } else {
         sendData.failLogin = "존재하지 않는 아이디 입니다"
-        done(null, sendData)
-        // res.send(sendData)
+        done(null, false, {message: "존재하지 않는 아이디 입니다"})
       }
     })
   }
 ))
 
-// 로그인
-// router.post('/login', (req, res) => {
-//   let username = req.body.username
-//   let password = req.body.password
-//   let sendData = {
-//     userID: null,
-//     username: '',
-//     name: "",
-//     isLogin: false,
-//     failLogin: ''
-//   }
-//
-//   const sql = "select * from users where Username = ?"
-//
-//   conn.query(sql,[username], (err, result) => {
-//     if(err){
-//       throw console.log('로그인 에러 :' + err)
-//     }
-//     if(result[0] !== undefined){
-//       console.log("?")
-//       if(result[0].password === password){
-//         sendData.userID = result[0].UserID
-//         sendData.isLogin = true
-//         sendData.name = result[0].name
-//         sendData.username = result[0].Username
-//         sendData.failLogin = ""
-//
-//         res.send(sendData)
-//       } else{
-//         sendData.failLogin = "비밀번호가 일치하지 않습니다"
-//         res.send(sendData)
-//       }
-//     } else {
-//       sendData.failLogin = "존재하지 않는 아이디 입니다"
-//       res.send(sendData)
-//     }
-//   })
-// })
+// 로그아웃
+router.get('/logout', (req, res) => {
+  console.log("logout")
+  req.logout()
+  req.session.save(() => {
+    res.redirect('/')
+  })
+})
 
 // 회원가입
 router.post('/register', (req, res) => {

@@ -6,7 +6,7 @@ const cors = require('cors')
 // ** passport **
 const passport = require('passport')
 const session = require('express-session')
-const mySQLStore = require('express-mysql-session')
+const mySQLStore = require('express-mysql-session')(session)
 // ** router **
 const authRouter = require('./route/auth')
 const todoRouter = require('./route/todo')
@@ -24,7 +24,6 @@ app.use(
     saveUninitialized: false,
     store: new mySQLStore({
       host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
       user: process.env.DB_ID,
       password: process.env.DB_PW,
       database: 'todo'
