@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styled from "styled-components";
 // ** Redux **
 import {persist} from "../store/store";
-import {logout} from "../store/auth/authSlice";
+import {__logout} from "../store/auth/authSlice";
 // ** Hook **
 import {useAppDispatch, useAppSelector} from "../hooks/TypedUseSelector";
 // ** Library **
@@ -79,7 +79,7 @@ function Header () {
     // handler function
     const logoutHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        dispatch(logout)
+        await dispatch(__logout)
         await persist.purge();
     }
 

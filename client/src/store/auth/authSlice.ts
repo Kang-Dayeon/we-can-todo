@@ -19,9 +19,6 @@ const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        logout: (state) => {
-            state.isLogin = false
-        },
         setFailLogin: (state) => {
             state.failLogin = ''
         }
@@ -39,14 +36,15 @@ const AuthSlice = createSlice({
                     state.userID = action.payload.userID
                     state.username = action.payload.username
                     state.name = action.payload.name
-                    console.log(action.payload.isLogin)
-                    console.log(state.isLogin)
                 } else {
                     state.failLogin = action.payload.failLogin
                 }
             })
         //통신에러
             .addCase(__login.rejected, (state) => {
+                state.isLogin = false
+            })
+            .addCase(__logout.fulfilled, (state) => {
                 state.isLogin = false
             })
         // 통신중
@@ -64,7 +62,7 @@ const AuthSlice = createSlice({
     }
 })
 
-export const {logout, setFailLogin} = AuthSlice.actions
+export const {setFailLogin} = AuthSlice.actions
 export default AuthSlice.reducer;
 
 // axios
@@ -92,6 +90,14 @@ export const __login = createAsyncThunk<
         }
     }
 )
+
+export const __logout = createAsyncThunk('auth/logout', async () => {
+    try {
+        axios.get('/auth/logout').then()
+    } catch (err){
+        throw console.error(err)
+    }
+})
 
 export const __register = createAsyncThunk<
     IUser,
