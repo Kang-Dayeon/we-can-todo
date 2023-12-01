@@ -78,9 +78,14 @@ function Header () {
 
     // handler function
     const logoutHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        await dispatch(__logout)
-        await persist.purge();
+        try {
+            e.preventDefault()
+            await dispatch(__logout())
+            await persist.purge();
+        } catch (err){
+            console.log(err)
+        }
+
     }
 
     // useInterval hook

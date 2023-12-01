@@ -11,7 +11,7 @@ const conn = db.init()
 let sendData = {
   userID: null,
   username: '',
-  name: "",
+  name: '',
   isLogin: false,
   failLogin: ''
 }
@@ -30,6 +30,7 @@ router.post('/login',(req, res) => {
         })
       } else {
         console.log("login fail")
+
         res.send(sendData)
       }
     })(req, res)
@@ -81,10 +82,18 @@ passport.use(new LocalStrategy(
 
           done(null, sendData)
         } else{
+          sendData.userID = null
+          sendData.isLogin = false
+          sendData.name = ''
+          sendData.username = ''
           sendData.failLogin = "비밀번호가 일치하지 않습니다"
           done(null, false, {message: "비밀번호가 일치하지 않습니다"})
         }
       } else {
+        sendData.userID = null
+        sendData.isLogin = false
+        sendData.name = ''
+        sendData.username = ''
         sendData.failLogin = "존재하지 않는 아이디 입니다"
         done(null, false, {message: "존재하지 않는 아이디 입니다"})
       }
@@ -93,10 +102,10 @@ passport.use(new LocalStrategy(
 ))
 
 // 로그아웃
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
   console.log("logout")
-  req.logout()
-  req.session.save(() => {
+  req.logout((err) => {
+    if(err) { return next(err) }
     res.redirect('/')
   })
 })

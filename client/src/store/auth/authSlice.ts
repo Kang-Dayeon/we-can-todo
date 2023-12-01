@@ -45,6 +45,8 @@ const AuthSlice = createSlice({
                 state.isLogin = false
             })
             .addCase(__logout.fulfilled, (state) => {
+                state.username = ''
+                state.name = ''
                 state.isLogin = false
             })
         // 통신중
