@@ -16,6 +16,14 @@ let sendData = {
   failLogin: ''
 }
 
+const initData = () => {
+  sendData.userID = null
+  sendData.isLogin = false
+  sendData.name = ''
+  sendData.username = ''
+  sendData.failLogin = ''
+}
+
 router.post('/login',(req, res) => {
   passport.authenticate(
     'local',
@@ -30,7 +38,6 @@ router.post('/login',(req, res) => {
         })
       } else {
         console.log("login fail")
-
         res.send(sendData)
       }
     })(req, res)
@@ -39,15 +46,12 @@ router.post('/login',(req, res) => {
 // passport가 session에 사용자의 id를 저장할 수 있도록 해줌
 // 로그인 했을때 딱 한번임
 passport.serializeUser((user, done) => {
-  console.log('SreializeUser', user)
   done(null, user.username)
 })
 
 // 로그인에 성공하고 페이지에 방문할때마다 호출됨
 // session에 저장된 user id를 기준으로 DB에서 데이터를 검색하고 호출
 passport.deserializeUser((username, done) => {
-  console.log('DeserializeUser', username)
-
   const sql = "select * from users where Username = ?"
 
   conn.query(sql,[username], (err, result) => {
@@ -82,18 +86,12 @@ passport.use(new LocalStrategy(
 
           done(null, sendData)
         } else{
-          sendData.userID = null
-          sendData.isLogin = false
-          sendData.name = ''
-          sendData.username = ''
+          initData()
           sendData.failLogin = "비밀번호가 일치하지 않습니다"
           done(null, false, {message: "비밀번호가 일치하지 않습니다"})
         }
       } else {
-        sendData.userID = null
-        sendData.isLogin = false
-        sendData.name = ''
-        sendData.username = ''
+        initData()
         sendData.failLogin = "존재하지 않는 아이디 입니다"
         done(null, false, {message: "존재하지 않는 아이디 입니다"})
       }
