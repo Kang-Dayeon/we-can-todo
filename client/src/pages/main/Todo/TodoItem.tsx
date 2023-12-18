@@ -69,9 +69,8 @@ function TodoItem(todoItem:ITodo){
     const toggleHandler = async (e: React.MouseEvent<HTMLLabelElement>) => {
         e.preventDefault()
         try {
-            await dispatch(__toggleTodo(todoItem)).then(() => {
-                dispatch(__getTodoList({userID}))
-            })
+            await dispatch(__toggleTodo(todoItem))
+            await dispatch(__getTodoList({userID}))
         } catch (err){
             console.log(err)
         }
@@ -80,9 +79,8 @@ function TodoItem(todoItem:ITodo){
     const removeHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         try {
-            await dispatch(__removeTodo(todoItem)).then(() => {
-                dispatch(__getTodoList({userID}))
-            })
+            await dispatch(__removeTodo(todoItem))
+            await dispatch(__getTodoList({userID}))
         } catch (err){
             console.log(err)
         }
