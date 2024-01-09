@@ -1,5 +1,5 @@
 export interface ITodo {
-    id?: number,
+    TodoID?: number,
     content: string,
     completed: number,
     userID: number,
