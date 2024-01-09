@@ -6,7 +6,7 @@ import {useAppDispatch, useAppSelector} from "../../../hooks/TypedUseSelector";
 import {__addTodo} from "../../../store/todos/todoSlice";
 
 // ** Styled-Component **
-const InputWrap = styled.div`
+export const InputWrap = styled.div`
     display: flex;
     padding: 10px 20px;
     width: auto;
@@ -14,7 +14,7 @@ const InputWrap = styled.div`
     border: none;
     border-radius: 30px;
 `
-const Input = styled.input`
+export const Input = styled.input`
     margin-right: 7px;
     flex-grow: 1;
     border: none;
@@ -26,7 +26,7 @@ const Input = styled.input`
         color: #fff;
     }
 `
-const AddBtn = styled.button`
+export const AddBtn = styled.button`
     width: 30px;
     height: 30px;
     color: #fff;
@@ -60,8 +60,7 @@ function TodoInsert() {
     const onSubmit = async (e: FormEvent) => {
         try {
             await e.preventDefault()
-            dispatch(__addTodo(value))
-            console.log(value)
+            await dispatch(__addTodo(value))
             setValue({
                 ...value,
                 content: ''

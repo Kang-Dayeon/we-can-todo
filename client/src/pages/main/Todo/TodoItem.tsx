@@ -1,11 +1,19 @@
-import React from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 // ** Type **
 import {ITodo} from "../../../store/todos/type";
 import styled from "styled-components";
 // ** Hook **
 import {useAppDispatch, useAppSelector} from "../../../hooks/TypedUseSelector";
 // ** redux **
-import {__getTodoList, __removeTodo, __toggleTodo} from "../../../store/todos/todoSlice";
+import { __editTodo, __getTodoList, __removeTodo, __toggleTodo} from "../../../store/todos/todoSlice";
+// ** component **
+import {InputWrap, Input, AddBtn} from "./TodoInsert";
+// ** Fort Awesome **
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+library.add(faPenToSquare)
 
 // ** Img **
 const IconCheck = require('../../../assets/images/icon/icon_check.png');
@@ -57,10 +65,27 @@ const RemoveBtn = styled.button`
     cursor: pointer;
 `
 
+const EditBtn = styled.button`
+    padding: 0 10px;
+    border: none;
+    color: #fff;
+    background: transparent;
+    cursor: pointer;
+    font-size: 15px;
+`
+
+const Form = styled.form`
+    width: 100%;
+`
+
 function TodoItem(todoItem:ITodo){
     // hook
     const dispatch = useAppDispatch()
     const userID = useAppSelector(state => state.auth.userID)
+
+    // state
+    const [edit, setEdit] = useState(false)
+    const [value, setValue] = useState(todoItem)
 
     // props
     const completedProps = todoItem.completed === 0 ? 'false' : 'true'
@@ -70,7 +95,7 @@ function TodoItem(todoItem:ITodo){
         e.preventDefault()
         try {
             await dispatch(__toggleTodo(todoItem))
-            await dispatch(__getTodoList({userID}))
+            dispatch(__getTodoList({userID: userID}))
         } catch (err){
             console.log(err)
         }
@@ -80,31 +105,82 @@ function TodoItem(todoItem:ITodo){
         e.preventDefault()
         try {
             await dispatch(__removeTodo(todoItem))
-            await dispatch(__getTodoList({userID}))
+            dispatch(__getTodoList({userID: userID}))
         } catch (err){
             console.log(err)
         }
     }
 
+    // handler function
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue({
+            ...value,
+            content: e.target.value
+        })
+    };
+
+    const onSubmit = async (e: FormEvent) => {
+        try {
+            await e.preventDefault()
+            await dispatch(__editTodo(value))
+            setValue({
+                ...value,
+                content: ''
+            })
+            setEdit(false)
+        } catch (err){
+            console.log(err)
+        }
+
+    };
+
+    const editHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        setEdit(true)
+    }
+
     return (
-        <TodoList completed={completedProps}>
-            <ItemWrap>
-                <div>
-                    <CheckBox id="check"></CheckBox>
-                    <CheckLabel
-                        htmlFor="check"
-                        onClick={toggleHandler}
-                        completed={completedProps}>
-                    </CheckLabel>
-                </div>
-                <TodoText completed={completedProps}>
-                    {todoItem.content}
-                </TodoText>
-            </ItemWrap>
-            <RemoveBtn onClick={removeHandler}>
-                X
-            </RemoveBtn>
-        </TodoList>
+        <>
+            {edit ? (
+                <TodoList completed={completedProps}>
+                    <Form onSubmit={onSubmit}>
+                        <InputWrap>
+                            <Input
+                                placeholder="Add Item"
+                                value={value.content}
+                                onChange={onChange}
+                            />
+                            <AddBtn type="submit">+</AddBtn>
+                        </InputWrap>
+                    </Form>
+                </TodoList>
+            ) : (
+                <TodoList completed={completedProps}>
+                    <ItemWrap>
+                        <div>
+                            <CheckBox id="check"></CheckBox>
+                            <CheckLabel
+                                htmlFor="check"
+                                onClick={toggleHandler}
+                                completed={completedProps}>
+                            </CheckLabel>
+                        </div>
+                        <TodoText completed={completedProps}>
+                            {todoItem.content}
+                        </TodoText>
+                    </ItemWrap>
+                    <ItemWrap>
+                        <EditBtn onClick={editHandler}>
+                            <FontAwesomeIcon icon={faPenToSquare as IconProp} />
+                        </EditBtn>
+                        <RemoveBtn onClick={removeHandler}>
+                            X
+                        </RemoveBtn>
+                    </ItemWrap>
+                </TodoList>
+
+            )}
+        </>
     );
 }
 
