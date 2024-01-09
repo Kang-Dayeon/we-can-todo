@@ -5,24 +5,44 @@ const db = require('../../config/mysql')
 // db 연결
 const conn = db.init()
 
+// 에러 핸들링 미들웨어
+const handleErrors = (res, err, errorMessage) => {
+  console.error(errorMessage, err);
+  res.status(500).send({ error: errorMessage });
+};
+
+// 쿼리 실행 함수
+const runQuery = (query, values, res, successMessage) => {
+  conn.query(query, values, (err, result) => {
+    if (err) {
+      handleErrors(res, err, `Query execution error: ${err}`);
+    } else {
+      res.send(successMessage);
+    }
+  });
+};
+
 // todo list 불러오기
 router.post('/todolist', (req, res) => {
-  let userID = req.body.userID
-  let todoList = []
+  const userID = req.body.userID;
 
-  conn.query("select * from users where UserID = ?", [userID], (err, result) => {
-    if(err){
-      throw console.log('todo list 불러오기 에러:' + err)
+  conn.query('SELECT * FROM users WHERE UserID = ?', [userID], (err, result) => {
+    if (err) {
+      handleErrors(res, err, 'Todo list retrieval error');
+    } else {
+      const user = result[0];
+      if (user) {
+        conn.query('SELECT * FROM todolist WHERE UserID = ?', [user.UserID], (err, result) => {
+          if (err) {
+            handleErrors(res, err, 'Todo list retrieval error');
+          } else {
+            res.send(result);
+          }
+        });
+      }
     }
-    if(result[0] !== undefined){
-      let userID = result[0].UserID
-      conn.query("select * from todolist where UserID = ?", [userID], (err, result) => {
-        todoList.push(...result)
-        res.send(todoList)
-      })
-    }
-  })
-})
+  });
+});
 
 // add todo
 router.post('/add-todo',(req, res) => {
@@ -35,40 +55,42 @@ router.post('/add-todo',(req, res) => {
   // const findUser = "select * from users where UserID = ?"
   const insertTodo = "insert into todolist (content, completed, UserID) values(?,?,?)"
 
-  conn.query(insertTodo,[todo.content, todo.completed, todo.userID], (err, result) => {
-    if(err){
-      throw console.log('add todo error : ' + err)
-    } else {
-      res.send(todo)
-    }
-  })
+  runQuery(insertTodo, [todo.content, todo.completed, todo.userID], res, todo);
+})
+
+// edit todo
+router.post('/edit-todo',(req, res) => {
+  let todo = {
+    TodoID: req.body.TodoID,
+    content: req.body.content,
+    completed: req.body.completed,
+    userID: req.body.userID
+  }
+
+  const updateTodo = "update todolist set content = ? where TodoID = ?"
+
+  runQuery(updateTodo, [todo.content, todo.TodoID], res, todo);
 })
 
 // remove todo
 router.post('/remove-todo',(req, res) => {
-  let todoID = req.body.TodoID
+  let TodoID = req.body.TodoID
 
   const deleteTodo = "delete from todolist where TodoID = ?"
 
-  conn.query(deleteTodo,[todoID], (err) => {
-    if(err){
-      throw console.log('delete todo error : ' + err)
-    }
-  })
+  runQuery(deleteTodo, [TodoID], res, 'Todo removed successfully');
 })
 
 // toggle todo
 router.post('/toggle-todo',(req, res) => {
-  let completed = !req.body.completed
-  let todoID = req.body.TodoID
+  let todo = {
+    TodoID: req.body.TodoID,
+    completed: !req.body.completed,
+  }
 
   const toggleTodo = "update todolist set completed = ? where TodoID = ?"
 
-  conn.query(toggleTodo,[completed, todoID], (err, result) => {
-    if(err){
-      throw console.log('delete todo error : ' + err)
-    }
-  })
+  runQuery(toggleTodo, [todo.completed, todo.TodoID], res, todo);
 })
 
 module.exports = router
