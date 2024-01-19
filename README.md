@@ -1,5 +1,7 @@
 # we-can-todo
 
+<img src="https://github.com/Kang-Dayeon/we-can-todo/assets/94333816/0e8e56cd-dc8d-4e6b-8806-5789f9baf23f" />
+
 ## Stacks
 * Environment
   - Visual Studio Code
